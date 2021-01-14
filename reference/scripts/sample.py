@@ -1,12 +1,8 @@
-
-
 import pandas as pd
 
 def do_something(df):
 	print('I also ran')
 	return df + 1
-
-
 
 if __name__ == '__main__':
 
