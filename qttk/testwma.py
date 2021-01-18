@@ -3,8 +3,6 @@ import numpy as np
 from profiler import time_this
 
 '''
-todo:
-  [ ] using shape[0] in place of count because if series has a nan, count will return different value
 
 '''
 
