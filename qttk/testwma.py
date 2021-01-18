@@ -143,3 +143,22 @@ if __name__ == '__main__':
     assert x.index.dtype == np.dtype('<M8[ns]')
     assert y.index.dtype == np.dtype('<M8[ns]')
     assert z.index.dtype == np.dtype('<M8[ns]')
+
+    # Untested ....
+    test_series = pd.Series(list(range(21, 31)))
+    truth_series = pd.Series([
+        np.nan,
+        np.nan,
+        np.nan,
+        (21 * 1 + 22 * 2 + 23 * 3 + 24 * 4) / 10,
+        (22 * 1 + 23 * 2 + 24 * 3 + 25 * 4) / 10,
+        (23 * 1 + 24 * 2 + 25 * 3 + 26 * 4) / 10,
+        (24 * 1 + 25 * 2 + 26 * 3 + 27 * 4) / 10,
+        (25 * 1 + 26 * 2 + 27 * 3 + 28 * 4) / 10,
+        (26 * 1 + 27 * 2 + 28 * 3 + 29 * 4) / 10,
+        (27 * 1 + 28 * 2 + 29 * 3 + 30 * 4) / 10,
+    ])
+    test_results = weighted_moving_avg_v3(test_series, 4)
+    assert truth_series.equals(test_results)
+
+
