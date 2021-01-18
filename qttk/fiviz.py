@@ -78,6 +78,7 @@ def moving_average(df_slice, window):
         j = window_end - 1     # row index reference
 
         # mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
+
         # Just a suggestion ... untested
         # if i > window and window_end < df.shape[0]:
         #     mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
