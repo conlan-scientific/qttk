@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from qttk.profiler import time_this
+from profiler import time_this
 
 @time_this
 def pd_simple_moving_avg(values: pd.Series, m: int=20) -> pd.Series:
