@@ -68,34 +68,23 @@ def moving_average(df_slice, window):
     # Get it down to O(n)
     # 2021-01-17v3 moving_average algorithm - correctly validates vs. Excel
     i = window
-<<<<<<< HEAD
     mvgAvg = pd.DataFrame(0.0, index=np.arange(len(df_slice)), columns=['mvgAvg'])
-=======
-    mvgAvg = pd.DataFrame(0.0, index=np.arange(len(df_slice)), columns=[0])
-
->>>>>>> 667509c965bc1024dbfda0bfc28a1fe8e92b776b
     while i < len(df_slice) + 1:
     # for i in range(window,df.shape[0] + 1):
-
         window_start = i - window
         window_end = i         # numpy doesn't select the ending index in a slice
         j = window_end - 1     # row index reference
-
-        # mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
-
+        mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
         # Just a suggestion ... untested
         # if i > window and window_end < df.shape[0]:
         #     mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
         # else:
         #     mvgAvg.iloc[j] = 0.0
-
         try:
             mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
         except:
             mvgAvg.iloc[j] = 0.0
-
-        # i = i + 1
-
+        i = i + 1
     return mvgAvg
 
 @time_this
@@ -200,6 +189,3 @@ if __name__ == '__main__':
     x = -window*3                  # define the date range for fiviz to plot
     price = data[['open', 'close', 'low', 'high']]
     fiviz(data.index[x:], price.iloc[x:], rsi_SPY.iloc[x:])
-
-
-
