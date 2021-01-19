@@ -112,6 +112,8 @@ def rsi(rets, window):
 
     returns a series of RSI values
     '''
+    # RSI algorithm validated against Excel: 2021-01-17v3
+
     # date_range is used to reindex after separating days up from days down
     date_range = rets.index
     up = rets.loc[rets.iloc[:] >= 0.0]
@@ -177,14 +179,31 @@ if __name__ == '__main__':
     # window needs to be optimized for trading frequency/price autocorrelation
     # lag period
     window = 14
-    rets_SPY = net_returns(data)
-    # save_data() instances are for validating the RSI algorithm
-    # comment out/remove save_data() instances once RSI algorithm is
-    # validated.
-    # RSI algorithm validated against Excel: 2021-01-17v3
-    #save_data('rets_SPY', rets_SPY)
-    rsi_SPY = rsi(rets_SPY, window)
-    #save_data('rsi_SPY', rsi_SPY)
+
+    # for capturing output in a text file
+    # https://docs.python.org/3/library/contextlib.html#contextlib.redirect_stdout
+    import io
+    from contextlib import redirect_stdout
+
+    filename_rets_output = os.path.join(path, 'data', 'validation_data', \
+    'rets_SPY_output.txt')
+
+    f = io.StringIO()
+    with open(filename_rets_output, 'w') as f:
+        with redirect_stdout(f):
+            rets_SPY = net_returns(data)
+            f.close()
+
+    # for capturing output in a text file
+    filename_rsi_output = os.path.join(path, 'data', 'validation_data', \
+    'rsi_SPY_output.txt')
+
+    f = io.StringIO()
+    with open(filename_rsi_output, 'w') as f:
+        with redirect_stdout(f):
+            rsi_SPY = rsi(rets_SPY, window)
+            f.close()
+
     test(window) #execute unit tests
     x = -window*3                  # define the date range for fiviz to plot
     price = data[['open', 'close', 'low', 'high']]
