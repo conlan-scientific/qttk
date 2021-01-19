@@ -184,9 +184,12 @@ if __name__ == '__main__':
     # https://docs.python.org/3/library/contextlib.html#contextlib.redirect_stdout
     import io
     from contextlib import redirect_stdout
+    from datetime import datetime
 
+    date = datetime.now()
+    now = date.strftime("%Y-%m-%d-%H%M%S")
     filename_rets_output = os.path.join(path, 'data', 'validation_data', \
-    'rets_SPY_output.txt')
+    'retsSPYPerformanceData{}.txt'.format(now))
 
     f = io.StringIO()
     with open(filename_rets_output, 'w') as f:
@@ -196,7 +199,7 @@ if __name__ == '__main__':
 
     # for capturing output in a text file
     filename_rsi_output = os.path.join(path, 'data', 'validation_data', \
-    'rsi_SPY_output.txt')
+    'rsiSPYPerformanceData{}.txt'.format(now))
 
     f = io.StringIO()
     with open(filename_rsi_output, 'w') as f:
