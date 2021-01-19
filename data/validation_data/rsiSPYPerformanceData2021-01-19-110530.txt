@@ -1,9 +1,0 @@
-Running rsi ...
-Running moving_average ...
-Completed moving_average in 1511.55 milliseconds
-
-Running moving_average ...
-Completed moving_average in 1414.429 milliseconds
-
-Completed rsi in 2929.837 milliseconds
-

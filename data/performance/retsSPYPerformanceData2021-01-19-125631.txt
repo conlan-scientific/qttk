@@ -1,0 +1,6 @@
+Running net_returns ...
+Running fillinValues ...
+Completed fillinValues in 0.348 milliseconds
+
+Completed net_returns in 4.424 milliseconds
+

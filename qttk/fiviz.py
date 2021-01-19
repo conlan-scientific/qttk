@@ -1,6 +1,6 @@
 # Quantitative Trading ToolKit (qttk)
 # https://github.com/conlan-scientific/qttk
-#
+
 # fiviz.py - Financial Visualization
 # candles chart with rsi
 
@@ -11,6 +11,9 @@ import pandas as pd
 import numpy as np
 import os
 from profiler import time_this
+# for moving average performance study:
+from mvgAvg import moving_average # baseline algorithm
+from mvgAvg import mvgAvg2        # improved algorithm
 
 def fiviz(x, y1, y2):
     fig, axs = plt.subplots(2, 1, figsize=(10,6))
@@ -63,31 +66,6 @@ def net_returns(df):
     return rets
 
 @time_this
-def moving_average(df_slice, window):
-    # Complexity O(n * m) for n = df_slice.shape[0] and m = window.
-    # Get it down to O(n)
-    # 2021-01-17v3 moving_average algorithm - correctly validates vs. Excel
-    i = window
-    mvgAvg = pd.DataFrame(0.0, index=np.arange(len(df_slice)), columns=['mvgAvg'])
-    while i < len(df_slice) + 1:
-    # for i in range(window,df.shape[0] + 1):
-        window_start = i - window
-        window_end = i         # numpy doesn't select the ending index in a slice
-        j = window_end - 1     # row index reference
-        mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
-        # Just a suggestion ... untested
-        # if i > window and window_end < df.shape[0]:
-        #     mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
-        # else:
-        #     mvgAvg.iloc[j] = 0.0
-        try:
-            mvgAvg.iloc[j] = np.sum(df_slice[window_start:window_end])/window
-        except:
-            mvgAvg.iloc[j] = 0.0
-        i = i + 1
-    return mvgAvg
-
-@time_this
 def save_data(filename, df):
     # save_data is a convenience method to save data to .csv file
     # df needs to be a Pandas dataframe
@@ -111,6 +89,8 @@ def rsi(rets, window):
         window is x days for the moving average calculation
 
     returns a series of RSI values
+
+    Completed rsi in 4.283 milliseconds
     '''
     # RSI algorithm validated against Excel: 2021-01-17v3
 
@@ -119,13 +99,17 @@ def rsi(rets, window):
     up = rets.loc[rets.iloc[:] >= 0.0]
     up = up.reindex(date_range, fill_value = 0.0)
     #save_data('up', up)
-    up_avg = moving_average(up, window)
+
+    up_avg = up.rolling(window=window).mean()
+
     up_avg = up_avg.fillna(value = 0.0)
     #save_data('up_avg', up_avg)
     down = rets.loc[rets.iloc[:] < 0.0]
     down = down.reindex(date_range, fill_value = 0.0)
     #save_data('down', down)
-    down_avg = moving_average(down, window) * -1
+
+    down_avg = down.rolling(window=window).mean()*-1
+
     down_avg = down_avg.fillna(value = 0.0)
     # replace 0s with 1s
     down_avg.replace(to_replace = 0.0, value = 1.0)
@@ -133,9 +117,11 @@ def rsi(rets, window):
     # calculate rsi
     rs = up_avg/down_avg
     rsi = 100 - (100/(1+rs))
+    rsi = rsi.to_frame()
     rsi.rename(columns={'mvgAvg':'RSI'}, inplace=True)
     rsi.set_index(date_range, inplace=True)
     rsi.fillna(value=1.0, inplace=True)
+    #save_data('rsi_SPY', rsi)
     return rsi
 
 def test(window):
@@ -188,17 +174,18 @@ if __name__ == '__main__':
 
     date = datetime.now()
     now = date.strftime("%Y-%m-%d-%H%M%S")
-    filename_rets_output = os.path.join(path, 'data', 'validation_data', \
+    filename_rets_output = os.path.join(path, 'data', 'performance', \
     'retsSPYPerformanceData{}.txt'.format(now))
 
     f = io.StringIO()
     with open(filename_rets_output, 'w') as f:
         with redirect_stdout(f):
             rets_SPY = net_returns(data)
+            #save_data('rets_SPY', rets_SPY)
             f.close()
 
     # for capturing output in a text file
-    filename_rsi_output = os.path.join(path, 'data', 'validation_data', \
+    filename_rsi_output = os.path.join(path, 'data', 'performance', \
     'rsiSPYPerformanceData{}.txt'.format(now))
 
     f = io.StringIO()
