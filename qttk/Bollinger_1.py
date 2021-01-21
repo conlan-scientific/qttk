@@ -18,7 +18,7 @@ style.use('ggplot')  #Setting the style of the plot
 
 # In[7]:
 
-def bollinger(close: pd.Series):
+def bollinger(dataset):
     df = pd.read_csv(dataset)                 #reading the csv file that was made
     df.set_index('Date', inplace = True)      #setting the index to the date
 
