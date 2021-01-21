@@ -9,7 +9,7 @@ import numpy as np
 from scipy.signal import lfiltic, lfilter  # testing purposes only
 from profiler import time_this
 
-
+@time_this
 def exponential_moving_average_v1(values:      pd.Series,
                                   com:         Optional[float] = None,
                                   span:        Optional[float] = None,
@@ -54,6 +54,7 @@ def _numpy_ewm_alpha_v2(values: np.array,
     return out[:values.size]
 
 
+@time_this
 def exponential_moving_average_v2(values: pd.Series,
                                   alpha: float = 0,
                                   min_periods: int = 5) -> pd.Series:
@@ -66,7 +67,7 @@ def exponential_moving_average_v2(values: pd.Series,
     values = a
     return values
 
-
+@time_this
 def exponential_moving_average_v3(values: np.array, min_periods: int = 5):
     '''
     Scipy alternative 
