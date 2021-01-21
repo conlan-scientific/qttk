@@ -95,7 +95,9 @@ def bollinger(dataset):
 
 
 # In[8]:
-
+# import os
+# script_dir = os.path.dirname(__file__)
+# filepath = os.path.join(script_dir, '..', 'data', 'eod', 'AWU.csv')
 
 x = bollinger('TSLA.csv')
 x
