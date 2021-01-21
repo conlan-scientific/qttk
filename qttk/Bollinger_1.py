@@ -18,11 +18,11 @@ style.use('ggplot')  #Setting the style of the plot
 
 # In[7]:
 
-
-def bollinger(dataset):
+def bollinger(close: pd.Series):
     df = pd.read_csv(dataset)                 #reading the csv file that was made
     df.set_index('Date', inplace = True)      #setting the index to the date
-    
+
+
     '''A Bollinger Band® is a technical analysis tool defined by a set of trendlines    plotted two standard deviations (positively and negatively) away from a simple
     moving average (SMA) of a security's price, but which can be adjusted to user
     preferences.'''
