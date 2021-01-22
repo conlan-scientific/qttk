@@ -74,4 +74,3 @@ if __name__ == '__main__':
     #     for i in exp_range.iterator():
     #         for j in [5, 10, 20, 50, 100]:
     #             mvgAvg2(series.iloc[:i], j)
-

@@ -1,3 +1,0 @@
-Running rsi ...
-Completed rsi in 3.208 milliseconds
-

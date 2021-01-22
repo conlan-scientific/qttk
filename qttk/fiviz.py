@@ -4,16 +4,17 @@
 # fiviz.py - Financial Visualization
 # candles chart with rsi
 
+# run from prompt: /qttk>ipython -i ./qttk/fiviz.py
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import datetime
+from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from profiler import time_this
-# for moving average performance study:
-from mvgAvg import moving_average # baseline algorithm
-from mvgAvg import mvgAvg2        # improved algorithm
+from profiler_v2 import time_this, timed_report
+from profiler_v2 import ExponentialRange
+
 
 def fiviz(x, y1, y2):
     fig, axs = plt.subplots(2, 1, figsize=(10,6))
@@ -40,14 +41,12 @@ def fiviz(x, y1, y2):
 
     plt.show()
 
-@time_this
 def fillinValues(dataframe):
     # fill in NaN values
     dataframe.fillna(method='ffill', inplace=True)
     dataframe.fillna(method='bfill', inplace=True)
     return dataframe
 
-@time_this
 def net_returns(df):
     '''
     Net return(t) = Price(t)/Price(t-1) - 1
@@ -65,14 +64,12 @@ def net_returns(df):
     rets = fillinValues(rets)
     return rets
 
-@time_this
 def save_data(filename, df):
     # save_data is a convenience method to save data to .csv file
     # df needs to be a Pandas dataframe
     filename = os.path.join(path, 'data', 'validation_data', '{}.csv'.format(filename))
     df.to_csv(filename)
 
-@time_this
 def rsi(rets, window):
     '''
     RSI: Relative Strength Index
@@ -118,7 +115,7 @@ def rsi(rets, window):
     rs = up_avg/down_avg
     rsi = 100 - (100/(1+rs))
     rsi = rsi.to_frame()
-    rsi.rename(columns={'mvgAvg':'RSI'}, inplace=True)
+    rsi.rename(columns={0:'RSI'}, inplace=True)
     rsi.set_index(date_range, inplace=True)
     rsi.fillna(value=1.0, inplace=True)
     #save_data('rsi_SPY', rsi)
@@ -130,8 +127,8 @@ def test(window):
     net_returns() and rsi()
     '''
     # load a known dataset to execute tests against
-    path = os.path.dirname(os.getcwd())
-    filename = os.path.join(path, 'data', 'SPY.csv')
+    path = os.path.dirname(__file__)
+    filename = os.path.join(path, '..', 'data', 'SPY.csv')
     data = pd.read_csv(filename, index_col=0, parse_dates=True)
 
     # test net_returns() to validate the results
@@ -139,10 +136,8 @@ def test(window):
     # no result is showon when a test passes
     from pandas._testing import assert_frame_equal
 
-    filename_rets = os.path.join(path, 'data', 'validation_data', 'rets_SPY.csv')
+    filename_rets = os.path.join(path, '..', 'data', 'validation_data', 'rets_SPY.csv')
     test_rets_validated = pd.read_csv(filename_rets, index_col=0, parse_dates=True)
-    # net_returns() returns a numpy object, assert_frame_equal requires two dataframes
-    # so, the results of net_returns() are converted to a dataframe
     test_rets = pd.DataFrame(net_returns(data))
     #save_data('test_rets', test_rets)
     assert_frame_equal(test_rets_validated, test_rets)
@@ -151,50 +146,42 @@ def test(window):
     # window must be equal to 14 for test to pass
     if window != 14:
         window = 14
-    filename_rsi = os.path.join(path, 'data', 'validation_data', 'rsi_SPY.csv')
+    filename_rsi = os.path.join(path, '..', 'data', 'validation_data', 'rsi_SPY.csv')
     test_rsi_validated = pd.read_csv(filename_rsi, index_col=0, parse_dates=True)
-    test_rets = net_returns(data)
-    test_rsi = rsi(test_rets, window)
+    test_rsi = rsi(test_rets['close'], window)
     assert_frame_equal(test_rsi_validated, test_rsi)
 
 
 if __name__ == '__main__':
-    path = os.path.dirname(os.getcwd())
-    filename = os.path.join(path, 'data', 'SPY.csv')
+    path = os.path.dirname(__file__)
+    filename = os.path.join(path, '..', 'data', 'SPY.csv')
     data = pd.read_csv(filename, index_col=0, parse_dates=True)
     # window needs to be optimized for trading frequency/price autocorrelation
     # lag period
     window = 14
 
-    # for capturing output in a text file
-    # https://docs.python.org/3/library/contextlib.html#contextlib.redirect_stdout
-    import io
-    from contextlib import redirect_stdout
-    from datetime import datetime
-
     date = datetime.now()
     now = date.strftime("%Y-%m-%d-%H%M%S")
+
     filename_rets_output = os.path.join(path, 'data', 'performance', \
     'retsSPYPerformanceData{}.txt'.format(now))
+    rets_SPY = net_returns(data)
 
-    f = io.StringIO()
-    with open(filename_rets_output, 'w') as f:
-        with redirect_stdout(f):
-            rets_SPY = net_returns(data)
-            #save_data('rets_SPY', rets_SPY)
-            f.close()
-
-    # for capturing output in a text file
     filename_rsi_output = os.path.join(path, 'data', 'performance', \
     'rsiSPYPerformanceData{}.txt'.format(now))
+    rsi_SPY = rsi(rets_SPY, window)
 
-    f = io.StringIO()
-    with open(filename_rsi_output, 'w') as f:
-        with redirect_stdout(f):
+    # Execute unit tests
+    test(window)
+    ''' TODO: time_report() raises 'n_values' error
+    # Performance Characterization
+    # timed_report()
+    exp_range = ExponentialRange(1, 5, 1/4)
+
+    with timed_report():
+        for i in exp_range.iterator():
             rsi_SPY = rsi(rets_SPY, window)
-            f.close()
-
-    test(window) #execute unit tests
+    '''
     x = -window*3                  # define the date range for fiviz to plot
     price = data[['open', 'close', 'low', 'high']]
     fiviz(data.index[x:], price.iloc[x:], rsi_SPY.iloc[x:])
