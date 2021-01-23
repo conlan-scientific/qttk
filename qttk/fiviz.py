@@ -173,7 +173,7 @@ if __name__ == '__main__':
 
     # Execute unit tests
     test(window)
-    ''' TODO: time_report() raises 'n_values' error
+    ''' todo: timed_report() raises 'n_values' error
     # Performance Characterization
     # timed_report()
     exp_range = ExponentialRange(1, 5, 1/4)
