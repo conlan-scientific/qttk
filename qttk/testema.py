@@ -135,13 +135,13 @@ def test(function_name: str, i):
 
     # defines input data and parameters for the EMA functions
     series = pd.read_csv(os.path.join(path, '..', 'data', 'validation_data', \
-    'EMA-ValidationData-data_input.csv'))
+    'Validation-data_input.csv'))
     mp = 5
     a = 2/(mp + 1)
-
-    # unit test cases:
-    # x == x, _x == y, y == y, y == x, z == z, z == y
     '''
+    # unit test cases:
+    x == x, _x == y, y == y, y == x, z == z, z == y
+
     todo resolve DataFrame shape mismatch
     line 153
     [left]:  (1000000, 2)

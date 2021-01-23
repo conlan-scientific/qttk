@@ -1,9 +1,13 @@
+'''
 # Quantitative Trading ToolKit (qttk)
 # https://github.com/conlan-scientific/qttk
 
 # movgAvg.py - Moving Average Study
 # performance evaluation of different moving average algorithms
 
+# run from project root directory:
+    C:/Users/user/qttk>ipython -i ./qttk/mvgAvg.py
+'''
 import pandas as pd
 import numpy as np
 import os

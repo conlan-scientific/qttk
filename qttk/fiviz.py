@@ -1,11 +1,13 @@
+'''
 # Quantitative Trading ToolKit (qttk)
 # https://github.com/conlan-scientific/qttk
 
 # fiviz.py - Financial Visualization
 # candles chart with rsi
 
-# run from prompt: /qttk>ipython -i ./qttk/fiviz.py
-
+# run from project root directory:
+    C:/Users/user/qttk>ipython -i ./qttk/fiviz.py
+'''
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime

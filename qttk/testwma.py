@@ -1,4 +1,19 @@
 '''
+# Quantitative Trading ToolKit (qttk)
+# https://github.com/conlan-scientific/qttk
+
+testwma.py - Weighted Moving Average Functions
+
+Weighted moving averages assign a heavier weighting to more current
+data points since they are more relevant than dat points in the distant
+past.  The sum of the weighting should add up to 1 (or 100 percent).
+
+from: Investopedia.com
+http://bit.ly/364HCPk
+
+# run from project root directory:
+    C:/Users/user/qttk>ipython -i ./qttk/testwma.py
+
 Profiled and tested weighted moving average functions
 '''
 import pandas as pd
