@@ -138,14 +138,14 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
 def main(data_file_path: Optional[str] = None,
          save_figure: bool = True,         
          required_columns: Optional[pd.Series] = None ) -> None:
-
-    """Create Bollinger Band Plot
+    """Main entry ponit for graph generating tool
 
     Args:
-        single_file (bool, optional): [description]. Defaults to True.
+        data_file_path (Optional[str], optional): [description]. Defaults to None.
         save_figure (bool, optional): [description]. Defaults to True.
-        required_columns (pd.Series, optional): [description]. Defaults to None.
+        required_columns (Optional[pd.Series], optional): [description]. Defaults to None.
     """
+
     if data_file_path:
         assert os.path.exists(data_file_path), f"{data_file_path} not found"
         csv_file = data_file_path
