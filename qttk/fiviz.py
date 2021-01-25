@@ -14,8 +14,8 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from profiler_v2 import time_this, timed_report
-from profiler_v2 import ExponentialRange
+from qttk.profiler_v2 import time_this, timed_report
+from qttk.profiler_v2 import ExponentialRange
 
 
 def fiviz(x, y1, y2):
@@ -66,7 +66,7 @@ def net_returns(df):
     rets = fillinValues(rets)
     return rets
 
-def save_data(filename, df):
+def _save_data(filename, df):
     # save_data is a convenience method to save data to .csv file
     # df needs to be a Pandas dataframe
     filename = os.path.join(path, 'data', 'validation_data', '{}.csv'.format(filename))

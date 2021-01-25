@@ -26,8 +26,8 @@ from typing import List, Dict, Any, Optional, Union
 from datetime import timedelta
 from pandas._typing import FrameOrSeries
 from scipy.signal import lfiltic, lfilter  # testing purposes only
-from profiler import time_this
-from fiviz import fillinValues
+from qttk.profiler import time_this
+from qttk.fiviz import fillinValues
 import pandas as pd
 import numpy as np
 import os
