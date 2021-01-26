@@ -16,33 +16,45 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from indicators import bollinger
 from qttk.profiler_v2 import time_this, timed_report
 from qttk.profiler_v2 import ExponentialRange
+from indicators import bollinger
 
 
-def plot(x, y1, y2):
+def plot(dataframe: pd.DataFrame) -> None:
     '''
     Plots 2 subplots, an equity curve with Bollinger bands and an rsi plot
     '''
     fig, axs = plt.subplots(2, 1, figsize=(10,6))
     plt.subplots_adjust(hspace=0.3)
-    locator = mdates.AutoDateLocator(minticks=5, maxticks=30)
+    locator = mdates.AutoDateLocator(minticks=3, maxticks=20)
     formatter = mdates.ConciseDateFormatter(locator)
-
-    axs[0].set_title('SPY OHLC Price')
+    '''
+    characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, which are short-hand
+    notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
+    '''
+    axs[0].set_title('Ticker Price')
     axs[0].xaxis.set_major_locator(locator)
     axs[0].xaxis.set_major_formatter(formatter)
-    # transpose data for boxplots (i.e. candle plots)
-    y1_transposed = y1.T
-    axs[0].boxplot(y1_transposed, whis=[0,100])
+    axs[0].plot(dataframe[['MA_Close', 'BOLU', 'BOLD']], c='b',\
+     lw=0.5)
+    axs[0].plot(dataframe[['close']], c='k', lw=0.8)
+    axs[0].scatter(dataframe.index, dataframe[['open']], s=1.0, c='b',\
+     marker=',')
+    axs[0].scatter(dataframe.index, dataframe[['high']], s=1.0, c='g',\
+    marker=',')
+    axs[0].scatter(dataframe.index, dataframe[['low']], s=1.0, c='r',\
+    marker=',')
+    axs[0].scatter(dataframe.index, dataframe[['close']], s=1.0, c='k',\
+    marker=',')
     axs[0].set_ylabel('Price')
     axs[0].grid(True)
 
-    axs[1].set_title('SPY rsi')
+    axs[1].set_title('RSI')
     axs[1].xaxis.set_major_locator(locator)
     axs[1].xaxis.set_major_formatter(formatter)
-    axs[1].plot(x, y2)
+    axs[1].set_ylim(0, 100)
+    axs[1].plot(dataframe[['rsi']], c='k', lw=1.0)
     axs[1].set_xlabel('Date')
     axs[1].set_ylabel('rsi')
     axs[1].grid(True)
@@ -58,13 +70,15 @@ def load_sample_ticker():
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
     return dataframe
 
-def _fillinValues(dataframe):
-    # fill in NaN values
+def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
+    '''
+    Fill in NaN values
+    '''
     dataframe.fillna(method='ffill', inplace=True)
     dataframe.fillna(method='bfill', inplace=True)
     return dataframe
 
-def compute_net_returns(dataframe):
+def compute_net_returns(dataframe:pd.DataFrame)->pd.DataFrame:
     '''
     Net return(t) = Price(t)/Price(t-1) - 1
     from: page 13, Machine Trading by Chan, E.P.
@@ -81,14 +95,14 @@ def compute_net_returns(dataframe):
     rets = _fillinValues(rets)
     return rets
 
-def _save_data(filename, dataframe):
+def _save_data(filename, dataframe: pd.DataFrame):
     # _save_data is a convenience method to save data to .csv file
     # dataframe needs to be a Pandas dataframe
     path = os.path.dirname(__file__)
     filename = os.path.join(path, '..', 'data', 'validation_data', '{}.csv'.format(filename))
     dataframe.to_csv(filename)
 
-def compute_rsi(dataframe, window=14):
+def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
     '''
     rsi: Relative Strength Index
         rsi = 100 - (100/(1+RS))
@@ -177,7 +191,13 @@ if __name__ == '__main__':
     # a shorter window makes rsi more sensitive to daily price changes
     window = 14
 
-    rsi_SPY = compute_rsi(dataframe, window)
+    rsi = compute_rsi(dataframe, window)
+    to_plot = bollinger(dataframe)
+
+    x = -window                  # define the date range for plot to plot
+    to_plot = to_plot.iloc[x:]
+    to_plot['rsi'] = rsi.iloc[x:, [0]]
+    plot(to_plot)
 
     # Execute unit tests
     test(window)
@@ -190,7 +210,4 @@ if __name__ == '__main__':
         for i in exp_range.iterator():
             rsi_SPY = compute_rsi(dataframe, window)
     '''
-    x = -window*3                  # define the date range for plot to plot
-    price = dataframe[['open', 'close', 'low', 'high']]
-    plot(dataframe.index[x:], price.iloc[x:], rsi_SPY.iloc[x:])
     exit
