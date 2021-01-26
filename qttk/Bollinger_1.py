@@ -151,7 +151,7 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
 
 
 def demo(data: str = None, data_file_path: Optional[str] = None,
-         save_figure: bool = True,
+         save_figure: bool = False,
          required_columns: Optional[pd.Series] = None) -> None:
     """Main entry ponit for graph generating tool
 
