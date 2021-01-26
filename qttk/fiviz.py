@@ -16,14 +16,14 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
+from indicators import bollinger
 from qttk.profiler_v2 import time_this, timed_report
 from qttk.profiler_v2 import ExponentialRange
 
 
 def plot(x, y1, y2):
     '''
-    Ref: Plotting a candlestick chart in matplotlib
-    http://bit.ly/2KQR29S
+    Plots 2 subplots, an equity curve with Bollinger bands and an rsi plot
     '''
     fig, axs = plt.subplots(2, 1, figsize=(10,6))
     plt.subplots_adjust(hspace=0.3)

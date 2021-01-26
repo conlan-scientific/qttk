@@ -1,5 +1,5 @@
 '''
-A Bollinger Band® is a technical analysis tool defined by a set of trendlines plotted two standard deviations 
+A Bollinger Band® is a technical analysis tool defined by a set of trendlines plotted two standard deviations
     positively and negatively) away from a simple moving average (SMA) of a security's price, but which
     can be adjusted to user preferences.
 
@@ -18,6 +18,7 @@ import datetime as dt
 from typing import Any, Optional, Iterable
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from qttk.utils.data_utils import check_dataframe_columns
 
 def bollinger(eod_data: pd.DataFrame,
@@ -65,12 +66,12 @@ def bollinger(eod_data: pd.DataFrame,
         .mean()
 
     # Tells us where we are in relation to the BB
-    # chart will have 2 additonal lines that are 
+    # chart will have 2 additonal lines that are
     #   21 day high and low to see how it fluctates
     eod_data['pct_b'] = ((eod_data['close']-eod_data['BOLD'])/(eod_data['BOLD']-eod_data['BOLU']))
 
     # Tells us how wide the BB are
-    # Lines are the highest and lowest values of bandwidth in the last 125 days 
+    # Lines are the highest and lowest values of bandwidth in the last 125 days
     # High is bulge low is squeeze
     eod_data['Bandwidth'] = (eod_data['BOLU']-eod_data['BOLD'])/eod_data['MA_Close']
     columns_to_fill = ['MA_Close', 'std', 'BOLU', 'BOLD', 'MA_Volume', 'Bandwidth']
@@ -83,7 +84,7 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
     '''
     Relies on global import matplotlib.pyplot as plt
 
-    todo: 
+    todo:
       [x] create line chart into a candlestick
       [ ] Change inf to zero or a better variable
       [x] Create the 4 graphs on top of each other
@@ -94,50 +95,64 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
           May want to add a CLI using argparse to produce a bunch of graphs
       [n/a] turn parameter dataset to *args
            Function expects a dataframe and can be called in a loop
-      [ ] Keep axis labels neat
+      [x] Keep axis labels neat
 
     '''
-    bb_data = data_frame[['open', 'close', 'low', 'high']]
-    fig, axs = plt.subplots(4, 1, figsize=(40, 20), gridspec_kw={'height_ratios': [3, 1, 1, 1]})
-    plt.subplots_adjust(hspace=0.4, bottom=0.3)
+    #bb_data = data_frame[['open', 'close', 'low', 'high']]
+    fig, axs = plt.subplots(4, 1, figsize=(10, 6), gridspec_kw={'height_ratios': [3, 1, 1, 1]})
+    plt.subplots_adjust(top=0.947, bottom=0.087, left=0.071, right=0.989, hspace=0.918,wspace=0.2)
+    '''
+    Figure parameters:
+    top=0.947, bottom=0.087, left=0.071, right=0.989, hspace=0.918,wspace=0.2
+    '''
+    # added formatting for axis labels
+    locator = mdates.AutoDateLocator(minticks=5, maxticks=30)
+    formatter = mdates.ConciseDateFormatter(locator)
 
     axs[0].set_title('Bollinger Bands')
-    axs[0].boxplot(bb_data.T, whis=[0,100])
-    axs[0].plot(data_frame[['MA_Volume', 'BOLU', 'BOLD']])
-    axs[0].autoscale(enable=True)
-    axs[0].set_xticklabels(data_frame.index, rotation=45)
+    #axs[0].boxplot(bb_data.T, whis=[0,100])
+    axs[0].plot(data_frame[['MA_Close', 'BOLU', 'BOLD']])
+    '''
+    characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, which are short-hand
+    notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
+    '''
+    axs[0].scatter(data_frame.index, data_frame[['close']], s=1.0, c='k', \
+    marker=',')
+    axs[0].xaxis.set_major_locator(locator)
+    axs[0].xaxis.set_major_formatter(formatter)
     axs[0].set_ylabel('Price')
     axs[0].grid(True)
 
-    # x day Moving Average VOlumn Subplot
+    # x day Moving Average Volume Subplot
     axs[1].set_title('Moving Average Volume')
     axs[1].bar(data_frame.index, data_frame['volume'])
-    axs[1].plot(data_frame.index, data_frame['MA_Volume'], color='black')
-    axs[1].set_xticklabels(data_frame.index, rotation=45)
-    axs[1].set_xlabel('Date')
+    #axs[1].plot(data_frame.index, data_frame['MA_Volume'], color='black')
+    axs[1].xaxis.set_major_locator(locator)
+    axs[1].xaxis.set_major_formatter(formatter)
     axs[1].set_ylabel('Volume')
     axs[1].grid(True)
 
     # %b Subplot
     axs[2].set_title('%B')
     axs[2].plot(data_frame.index, data_frame['pct_b'], color='black')
-    axs[2].set_xticklabels(data_frame.index, rotation=45)
-    axs[2].set_xlabel('Date')
+    axs[2].xaxis.set_major_locator(locator)
+    axs[2].xaxis.set_major_formatter(formatter)
     axs[2].set_ylabel('%B')
     axs[2].grid(True)
 
     # bandwidth Subplot
     axs[3].set_title('Bandwidth')
     axs[3].plot(data_frame.index, data_frame['Bandwidth'], color='black')
-    axs[3].set_xticklabels(data_frame.index, rotation=45)
+    axs[3].xaxis.set_major_locator(locator)
+    axs[3].xaxis.set_major_formatter(formatter)
     axs[3].set_xlabel('Date')
     axs[3].set_ylabel('Bandwidth')
     axs[3].grid(True)
 
 
-def main(data_file_path: Optional[str] = None,
-         save_figure: bool = True,         
-         required_columns: Optional[pd.Series] = None ) -> None:
+def demo(data: str = None, data_file_path: Optional[str] = None,
+         save_figure: bool = True,
+         required_columns: Optional[pd.Series] = None) -> None:
     """Main entry ponit for graph generating tool
 
     Args:
@@ -153,17 +168,17 @@ def main(data_file_path: Optional[str] = None,
     else:  # use relative path and example file
         script_dir = os.path.dirname(__file__)
         csv_files = os.path.join(script_dir, '..', 'data', 'eod')
-        csv_file = os.path.join(csv_files, 'AWU.csv')
+        csv_file = os.path.join(csv_files, data)
 
 
 
-    df = pd.read_csv(csv_file)
-    df = df.iloc[-180:] # trim dataframe or autofit axis ? 
+    df = pd.read_csv(csv_file, index_col=0, parse_dates=True)
+    df = df.iloc[-180:] # trim dataframe or autofit axis ?
 
     if required_columns is not None:
         check_dataframe_columns(df, required_columns)
 
-    df.set_index('date', inplace=True)
+    #df.set_index('date', inplace=True) # set index when csv read
     df = bollinger(df)
     bb_graph_formatter(df)
     plt.autoscale()
@@ -175,12 +190,15 @@ def main(data_file_path: Optional[str] = None,
 
 
 if __name__ == '__main__':
-    required_ohlcv_columns = pd.Series(['date', 'open', 'high', 'low', 'close', 'volume'])
-    main(required_columns=required_ohlcv_columns)
+    required_ohlcv_columns = pd.Series(['open', 'high', 'low', 'close', 'volume'])
+    # removed date as a required column because it is set as the dataframe index
+    # when the csv is read
+    #required_ohlcv_columns = pd.Series(['date', 'open', 'high', 'low', 'close', 'volume'])
+    data = 'AWU.csv' # name of data file to use
+    demo(data, required_columns=required_ohlcv_columns)
 
     # optional loop
     #script_dir = os.path.dirname(__file__)
     #csv_files = os.path.join(script_dir, '..', 'data', 'eod', '*.csv')
     #for csv_file in glob.glob(csv_files):
     #    main(csv_file)
-
