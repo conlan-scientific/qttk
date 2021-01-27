@@ -18,7 +18,7 @@ import numpy as np
 import os
 from qttk.profiler_v2 import time_this, timed_report
 from qttk.profiler_v2 import ExponentialRange
-from indicators import bollinger
+from Bollinger_1 import bollinger
 
 
 def plot(dataframe: pd.DataFrame) -> None:
