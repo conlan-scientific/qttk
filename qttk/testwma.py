@@ -18,7 +18,7 @@ Profiled and tested weighted moving average functions
 '''
 import pandas as pd
 import numpy as np
-from profiler import time_this
+from qttk.profiler import time_this
 
 
 @time_this

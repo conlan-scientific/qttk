@@ -8,15 +8,17 @@
 # run from project root directory:
     C:/Users/user/qttk>ipython -i ./qttk/mvgAvg.py
 '''
+__all__ = ['mvgAvg2']
+
 import pandas as pd
 import numpy as np
 import os
-# from profiler import time_this
-from profiler_v2 import time_this, timed_report
-from profiler_v2 import ExponentialRange
+# from qttk.profiler import time_this
+from qttk.profiler_v2 import time_this, timed_report
+from qttk.profiler_v2 import ExponentialRange
 
 
-@time_this(lambda *args, **kwargs: args[0].shape[0])
+#@time_this(lambda *args, **kwargs: args[0].shape[0])
 def moving_average(df_slice, window):
     # Complexity O(n * m) for n = df_slice.shape[0] and m = window.
     # Get it down to O(n)
@@ -44,8 +46,8 @@ def moving_average(df_slice, window):
         i = i + 1
     return mvgAvg
 
-@time_this(lambda *args, **kwargs: args[0].shape[0])
-def mvgAvg2(df_slice, window):
+#@time_this(lambda *args, **kwargs: args[0].shape[0])
+def mvgAvg2(df_slice:pd.DataFrame, window:int)->pd.DataFrame:
     # Complexity O(n * m) for n = df_slice.shape[0] and m = window.
     # Get it down to O(n)
     '''
@@ -78,3 +80,4 @@ if __name__ == '__main__':
     #     for i in exp_range.iterator():
     #         for j in [5, 10, 20, 50, 100]:
     #             mvgAvg2(series.iloc[:i], j)
+    exit
