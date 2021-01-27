@@ -36,10 +36,10 @@ def plot(dataframe: pd.DataFrame) -> None:
     axs[0].set_title('Ticker Price')
     axs[0].xaxis.set_major_locator(locator)
     axs[0].xaxis.set_major_formatter(formatter)
-    axs[0].plot(dataframe[['BOLU']], c='g', lw=1.0, ls='-.')
-    axs[0].plot(dataframe[['MA_Close']], c='y', lw=1.0, ls='-.')
-    axs[0].plot(dataframe[['BOLD']], c='r', lw=1.0, ls='-.')
-    axs[0].plot(dataframe[['close']], c='k', lw=1.0, ls='dotted')
+    axs[0].plot(dataframe[['BOLU']], c='g', lw=1.0, ls='-.', label='BB-Upper')
+    axs[0].plot(dataframe[['MA_Close']], c='y', lw=1.0, ls='-.', label='MA-Close')
+    axs[0].plot(dataframe[['BOLD']], c='r', lw=1.0, ls='-.', label='BB-Lower')
+    axs[0].plot(dataframe[['close']], c='k', lw=1.0, ls='dotted', label='Close')
     axs[0].scatter(dataframe.index, dataframe[['open']], s=4.0, c='b',\
      marker=".")
     axs[0].scatter(dataframe.index, dataframe[['high']], s=4.0, c='g',\
@@ -49,15 +49,18 @@ def plot(dataframe: pd.DataFrame) -> None:
     axs[0].scatter(dataframe.index, dataframe[['close']], s=4.0, c='k',\
     marker=".")
     axs[0].set_ylabel('Price')
+    axs[0].legend(loc=0)
     axs[0].grid(True)
 
-    axs[1].set_title('RSI')
+    axs[1].set_title('Ticker RSI')
     axs[1].xaxis.set_major_locator(locator)
     axs[1].xaxis.set_major_formatter(formatter)
     axs[1].set_ylim(0, 100)
-    axs[1].plot(dataframe[['rsi']], c='k', lw=1.0, ls='dotted', marker=".")
+    axs[1].plot(dataframe[['rsi']], c='k', lw=1.0, ls='dotted',\
+     marker=".", label="RSI")
     axs[1].set_xlabel('Date')
     axs[1].set_ylabel('rsi')
+    axs[1].legend(loc='lower right')
     axs[1].grid(True)
 
     plt.show()
