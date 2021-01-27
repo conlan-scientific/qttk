@@ -1,6 +1,7 @@
 import pandas as pd
+# from qttk.profiler import time_this
 
-
+# @time_this
 def rsi(dataframe, window):  # defining rsi with needed csv. and desired window
     df = pd.read_csv(dataframe)  # reading the csv file that was made
     df.set_index('date', inplace=True)  # setting the index to the date
