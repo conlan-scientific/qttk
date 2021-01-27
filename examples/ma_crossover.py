@@ -60,8 +60,8 @@ if __name__ == '__main__':
     filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
 
-    ma_short = ma(dataframe['close'], 15)
-    ma_long = ma(dataframe['close'], 100)
+    ma_short = ma(dataframe['close'], 10)
+    ma_long = ma(dataframe['close'], 25)
 
     ma_short = ma_short.set_index(dataframe.index)
     ma_long = ma_long.set_index(dataframe.index)

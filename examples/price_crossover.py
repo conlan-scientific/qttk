@@ -69,7 +69,7 @@ if __name__ == '__main__':
     filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
 
-    window = 14
+    window = 30
 
     rsi = compute_rsi(dataframe, window)
     to_plot = dataframe.copy()
