@@ -34,5 +34,4 @@ def rsi(dataframe, window):  # defining rsi with needed csv. and desired window
     return df
 
 
-x = rsi('Tsla.csv', 14)
-x
+
