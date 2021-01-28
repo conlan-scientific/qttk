@@ -11,8 +11,8 @@ def macd(dataset, n1, n2):
 
     assert n1 < n2
 
-    exp1 = df['adj close'].ewm(span=n1, adjust=False).mean()  # getting the exp. moving average of the first period
-    exp2 = df['adj close'].ewm(span=n2, adjust=False).mean()  # getting the exp. moving average of the second period
+    exp1 = df['close'].ewm(span=n1, adjust=False).mean()  # getting the exp. moving average of the first period
+    exp2 = df['close'].ewm(span=n2, adjust=False).mean()  # getting the exp. moving average of the second period
 
     macd_calc = exp1 - exp2  # obtaining the MACD from subtracting the EMA's
     df['MACD'] = macd_calc  # putting MACD into the dataframe
@@ -23,14 +23,12 @@ def macd(dataset, n1, n2):
     # Plotting
     macd_calc.plot(label='MACD', color='g')
     ax = exp3.plot(label='Signal Line', color='b')
-    df['adj close'].plot(ax=ax, secondary_y=True, label='Price')
+    df['close'].plot(ax=ax, secondary_y=True, label='Price')
 
     ax.set_ylabel('MACD')
     ax.right_ax.set_ylabel('Price $')
     ax.set_xlabel('Date')
+    ax.legend(loc=0)
     plt.show()
 
     return df
-
-
-

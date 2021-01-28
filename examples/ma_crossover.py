@@ -8,7 +8,7 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./examples/ma_crossover.py
 
-# production version: 2021-01-27
+# production version: 2021-01-28
 '''
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
