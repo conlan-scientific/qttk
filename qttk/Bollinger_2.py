@@ -1,5 +1,5 @@
 '''
-A Bollinger Band® is a technical analysis tool defined by a set of trendlines plotted two standard deviations 
+A Bollinger Band® is a technical analysis tool defined by a set of trendlines plotted two standard deviations
     positively and negatively) away from a simple moving average (SMA) of a security's price, but which
     can be adjusted to user preferences.
 
@@ -65,12 +65,12 @@ def bollinger(eod_data: pd.DataFrame,
         .mean()
 
     # Tells us where we are in relation to the BB
-    # chart will have 2 additonal lines that are 
+    # chart will have 2 additonal lines that are
     #   21 day high and low to see how it fluctates
     eod_data['pct_b'] = ((eod_data['close']-eod_data['BOLD'])/(eod_data['BOLD']-eod_data['BOLU']))
 
     # Tells us how wide the BB are
-    # Lines are the highest and lowest values of bandwidth in the last 125 days 
+    # Lines are the highest and lowest values of bandwidth in the last 125 days
     # High is bulge low is squeeze
     eod_data['Bandwidth'] = (eod_data['BOLU']-eod_data['BOLD'])/eod_data['MA_Close']
     columns_to_fill = ['MA_Close', 'std', 'BOLU', 'BOLD', 'MA_Volume', 'Bandwidth']
@@ -83,7 +83,7 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
     '''
     Relies on global import matplotlib.pyplot as plt
 
-    todo: 
+    todo:
       [x] create line chart into a candlestick
       [ ] Change inf to zero or a better variable
       [x] Create the 4 graphs on top of each other
@@ -135,9 +135,9 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
     axs[3].grid(True)
 
 
-def main(data_file_path: Optional[str] = None,
-         save_figure: bool = True,         
-         required_columns: Optional[pd.Series] = None ) -> None:
+def demo(data: str = None, data_file_path: Optional[str] = None,
+         save_figure: bool = False,
+         required_columns: Optional[pd.Series] = None) -> None:
     """Main entry ponit for graph generating tool
 
     Args:
@@ -153,12 +153,12 @@ def main(data_file_path: Optional[str] = None,
     else:  # use relative path and example file
         script_dir = os.path.dirname(__file__)
         csv_files = os.path.join(script_dir, '..', 'data', 'eod')
-        csv_file = os.path.join(csv_files, 'AWU.csv')
+        csv_file = os.path.join(csv_files, data)
 
 
 
     df = pd.read_csv(csv_file)
-    df = df.iloc[-180:] # trim dataframe or autofit axis ? 
+    df = df.iloc[-180:] # trim dataframe or autofit axis ?
 
     if required_columns is not None:
         check_dataframe_columns(df, required_columns)
@@ -176,11 +176,10 @@ def main(data_file_path: Optional[str] = None,
 
 if __name__ == '__main__':
     required_ohlcv_columns = pd.Series(['date', 'open', 'high', 'low', 'close', 'volume'])
-    main(required_columns=required_ohlcv_columns)
+    demo(required_columns=required_ohlcv_columns)
 
     # optional loop
     #script_dir = os.path.dirname(__file__)
     #csv_files = os.path.join(script_dir, '..', 'data', 'eod', '*.csv')
     #for csv_file in glob.glob(csv_files):
-    #    main(csv_file)
-
+    #    demo(csv_file)
