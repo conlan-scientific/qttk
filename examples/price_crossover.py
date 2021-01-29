@@ -33,18 +33,10 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
     axs[0].set_title(ticker+' Price')
     axs[0].xaxis.set_major_locator(locator)
     axs[0].xaxis.set_major_formatter(formatter)
-    axs[0].plot(dataframe[['BOLU']], c='g', lw=1.0, ls='-.', label='BB-Upper')
-    axs[0].plot(dataframe[['MA_Close']], c='y', lw=1.0, ls='-.', label='MA-Close')
-    axs[0].plot(dataframe[['BOLD']], c='r', lw=1.0, ls='-.', label='BB-Lower')
-    axs[0].plot(dataframe[['close']], c='k', lw=1.0, ls='dotted', label='Close')
-    axs[0].scatter(dataframe.index, dataframe[['open']], s=4.0, c='b',\
-     marker=".")
-    axs[0].scatter(dataframe.index, dataframe[['high']], s=4.0, c='g',\
-    marker=".")
-    axs[0].scatter(dataframe.index, dataframe[['low']], s=4.0, c='r',\
-    marker=".")
-    axs[0].scatter(dataframe.index, dataframe[['close']], s=4.0, c='k',\
-    marker=".")
+    axs[0].plot(dataframe[['BOLU']], c='g', lw=1.5, ls='-.', label='BB-Upper')
+    axs[0].plot(dataframe[['MA_Close']], c='y', lw=1.5, ls='-.', label='MA-Close')
+    axs[0].plot(dataframe[['BOLD']], c='r', lw=1.5, ls='-.', label='BB-Lower')
+    axs[0].plot(dataframe[['close']], c='k', lw=1.5, ls='dotted', label='Close')
     axs[0].set_ylabel('Price')
     axs[0].legend(loc=0)
     axs[0].grid(True)
@@ -53,8 +45,7 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
     axs[1].xaxis.set_major_locator(locator)
     axs[1].xaxis.set_major_formatter(formatter)
     axs[1].set_ylim(0, 100)
-    axs[1].plot(dataframe[['rsi']], c='k', lw=1.0, ls='dotted',\
-     marker=".", label="RSI")
+    axs[1].plot(dataframe[['rsi']], c='k', lw=1.5, ls='dotted', label="RSI")
     axs[1].set_xlabel('Date')
     axs[1].set_ylabel('rsi')
     axs[1].legend(loc='lower right')
@@ -77,6 +68,6 @@ if __name__ == '__main__':
 
     x = -window                  # define the date range for plot to plot
     to_plot = to_plot.iloc[x:]
-    to_plot['rsi'] = rsi.iloc[x:, [0]]
+    to_plot['rsi'] = rsi[x:]
     _plot(ticker, to_plot)
     exit

@@ -18,8 +18,8 @@ if __name__ == '__main__':
     ticker = 'AWU'
     dataset = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
 
-    n1 = 5   # for moving average short
-    n2 = 100  # for moving average long
+    n1 = 12   # for moving average short
+    n2 = 21  # for moving average long
 
     macd(dataset, n1, n2)
 

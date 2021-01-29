@@ -15,8 +15,9 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from qttk.profiler_v2 import time_this, timed_report
-from qttk.profiler_v2 import ExponentialRange
+from qttk.profiler import time_this
+#from qttk.profiler_v2 import time_this, timed_report
+#from qttk.profiler_v2 import ExponentialRange
 
 def load_sample_ticker():
     '''
@@ -105,9 +106,7 @@ def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
     # calculate rsi
     rs = up_avg/down_avg
     rsi = 100 - (100/(1+rs))
-    rsi = rsi.to_frame()
-    rsi.rename(columns={0:'rsi'}, inplace=True)
-    rsi.set_index(date_range, inplace=True)
+    rsi = rsi.rename('rsi')
     rsi.fillna(value=1.0, inplace=True)
     return rsi
 
@@ -123,22 +122,23 @@ def test(window):
     # if a test fails, an assertion error will be shown
     # no result is showon when a test passes
     from pandas._testing import assert_frame_equal
+    from pandas._testing import assert_series_equal
 
     path = os.path.dirname(__file__)
     filename_rets = os.path.join(path, '..', 'data', 'validation_data', 'rets_SPY.csv')
     test_rets_validated = pd.read_csv(filename_rets, index_col=0, parse_dates=True)
     test_rets = pd.DataFrame(compute_net_returns(dataframe))
-    #_save_data('test_rets', test_rets)
     assert_frame_equal(test_rets_validated, test_rets)
 
-    # test rsi() to validate the results
     # window must be equal to 14 for test to pass
     if window != 14:
         window = 14
+
     filename_rsi = os.path.join(path, '..', 'data', 'validation_data', 'rsi_SPY.csv')
     test_rsi_validated = pd.read_csv(filename_rsi, index_col=0, parse_dates=True)
+    test_rsi_series = test_rsi_validated.iloc[:, 0]
     test_rsi = compute_rsi(dataframe, window)
-    assert_frame_equal(test_rsi_validated, test_rsi)
+    assert_series_equal(test_rsi_series, test_rsi)
 
 
 if __name__ == '__main__':
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     test(window)
     ''' todo: timed_report() raises 'n_values' error
     # Performance Characterization
-    # timed_report()
+    timed_report()
     exp_range = ExponentialRange(1, 5, 1/4)
 
     with timed_report():

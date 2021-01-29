@@ -150,7 +150,7 @@ def bb_graph_formatter(data_frame: pd.DataFrame) -> None:
     axs[3].grid(True)
 
 
-def demo(data: str = None, data_file_path: Optional[str] = None,
+def bollinger_demo(data: str = None, data_file_path: Optional[str] = None,
          save_figure: bool = False,
          required_columns: Optional[pd.Series] = None) -> None:
     """Main entry ponit for graph generating tool
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     # when the csv is read
     #required_ohlcv_columns = pd.Series(['date', 'open', 'high', 'low', 'close', 'volume'])
     data = 'AWU.csv' # name of data file to use
-    demo(data, required_columns=required_ohlcv_columns)
+    bollinger_demo(data, required_columns=required_ohlcv_columns)
 
     # optional loop
     #script_dir = os.path.dirname(__file__)

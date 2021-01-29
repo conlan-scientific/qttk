@@ -36,17 +36,9 @@ def _plot(ticker:str, ticker_data: pd.DataFrame) -> None:
     axs.set_title(ticker+' Price')
     axs.xaxis.set_major_locator(locator)
     axs.xaxis.set_major_formatter(formatter)
-    axs.plot(ticker_data[['ma_short']], c='c', lw=1.0, ls='-.', label='MA-Short')
-    axs.plot(ticker_data[['ma_long']], c='b', lw=1.0, ls='-.', label='MA-Long')
-    axs.plot(ticker_data[['close']], c='k', lw=1.0, ls='dotted', label='Close')
-    axs.scatter(ticker_data.index, ticker_data[['open']], s=4.0, c='b',\
-    marker=".")
-    axs.scatter(ticker_data.index, ticker_data[['high']], s=4.0, c='g',\
-    marker=".")
-    axs.scatter(ticker_data.index, ticker_data[['low']], s=4.0, c='r',\
-    marker=".")
-    axs.scatter(ticker_data.index, ticker_data[['close']], s=4.0, c='k',\
-    marker=".")
+    axs.plot(ticker_data[['ma_short']], c='c', lw=1.5, ls='-.', label='MA-Short')
+    axs.plot(ticker_data[['ma_long']], c='b', lw=1.5, ls='-.', label='MA-Long')
+    axs.plot(ticker_data[['close']], c='k', lw=1.5, ls='dotted', label='Close')
     axs.set_ylabel('Price')
     axs.legend(loc=0)
     axs.grid(True)

@@ -11,7 +11,7 @@
 '''
 import pandas as pd
 import os
-from qttk.indicators import bollinger, demo
+from qttk.indicators import bollinger, bollinger_demo
 
 if __name__ == '__main__':
     required_ohlcv_columns = pd.Series(['open', 'high', 'low', 'close', 'volume'])
@@ -21,6 +21,6 @@ if __name__ == '__main__':
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
 
     data = 'AWU.csv' # name of data file to use
-    demo(data, required_columns=required_ohlcv_columns)
+    bollinger_demo(data, required_columns=required_ohlcv_columns)
 
     exit
