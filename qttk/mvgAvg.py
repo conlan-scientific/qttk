@@ -79,9 +79,10 @@ if __name__ == '__main__':
            ts(mvgAvg2)(series.iloc[:i], window=20)
 
     # test performance of window size
-     exp_range = ExponentialRange(1, 4, 1/4)
-     with timed_report():
-         for i in exp_range.iterator():
-             for j in [5, 10, 20, 50, 100]:
-                 mvgAvg2(series.iloc[:i], j)
+    '''
+    exp_range = ExponentialRange(1, 4, 1/4)
+    with timed_report():
+        for i in exp_range.iterator():
+            for j in [5, 10, 20, 50, 100]:
+                mvgAvg2(series.iloc[:i], j)'''
 

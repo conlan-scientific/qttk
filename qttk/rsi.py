@@ -15,9 +15,9 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from qttk.profiler import time_this
-#from qttk.profiler_v2 import time_this, timed_report
-#from qttk.profiler_v2 import ExponentialRange
+#from qttk.profiler import time_this
+from qttk.profiler_v2 import time_this, timed_report
+from qttk.profiler_v2 import ExponentialRange
 
 def load_sample_ticker():
     '''
@@ -152,13 +152,16 @@ if __name__ == '__main__':
 
     # Execute unit tests
     test(window)
-    ''' todo: timed_report() raises 'n_values' error
+    
     # Performance Characterization
-    timed_report()
     exp_range = ExponentialRange(1, 5, 1/4)
+    
+    test_columns = ['date', 'open', 'close', 'low', 'high', 'volume']
+    test_df = pd.DataFrame(np.random.rand(exp_range.max,6), columns=test_columns)
 
     with timed_report():
+        tt = time_this(lambda *args, **kwargs: args[0].shape[0])
         for i in exp_range.iterator():
-            rsi_SPY = compute_rsi(dataframe, window)
-    '''
-    exit
+            # rsi_SPY = compute_rsi(dataframe, window)
+            tt(compute_rsi)(test_df.iloc[:i], window)
+
