@@ -153,4 +153,15 @@ if __name__ == '__main__':
 
     # Execute unit tests
     test(window)
-    exit
+
+    # Performance Characterization
+    exp_range = ExponentialRange(1, 5, 1/4)
+
+    test_columns = ['date', 'open', 'close', 'low', 'high', 'volume']
+    test_df = pd.DataFrame(np.random.rand(exp_range.max,6), columns=test_columns)
+
+    with timed_report():
+        tt = time_this(lambda *args, **kwargs: args[0].shape[0])
+        for i in exp_range.iterator():
+            # rsi_SPY = compute_rsi(dataframe, window)
+            tt(compute_rsi)(test_df.iloc[:i], window)

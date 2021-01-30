@@ -18,7 +18,7 @@ from qttk.profiler_v2 import time_this, timed_report
 from qttk.profiler_v2 import ExponentialRange
 
 
-#@time_this(lambda *args, **kwargs: args[0].shape[0])
+# @time_this(lambda *args, **kwargs: args[0].shape[0])
 def moving_average(df_slice, window):
     # Complexity O(n * m) for n = df_slice.shape[0] and m = window.
     # Get it down to O(n)
@@ -46,7 +46,7 @@ def moving_average(df_slice, window):
         i = i + 1
     return mvgAvg
 
-#@time_this(lambda *args, **kwargs: args[0].shape[0])
+# @time_this(lambda *args, **kwargs: args[0].shape[0])
 def mvgAvg2(df_slice:pd.DataFrame, window:int)->pd.DataFrame:
     # Complexity O(n * m) for n = df_slice.shape[0] and m = window.
     # Get it down to O(n)
@@ -69,15 +69,20 @@ if __name__ == '__main__':
     series = pd.Series(np.random.random(exp_range.max))
 
     with timed_report():
-        for i in exp_range.iterator():
-            moving_average(series.iloc[:i], window=20)
+        ts = time_this(lambda *args, **kwargs: args[0].shape[0])
+
+        for i in exp_range.iterator():            
+            ts(moving_average)(series.iloc[:i], window=20)
+
 
         for i in exp_range.iterator():
-           mvgAvg2(series.iloc[:i], window=20)
+           ts(mvgAvg2)(series.iloc[:i], window=20)
 
-    # exp_range = ExponentialRange(1, 4, 1/4)
-    # with timed_report():
-    #     for i in exp_range.iterator():
-    #         for j in [5, 10, 20, 50, 100]:
-    #             mvgAvg2(series.iloc[:i], j)
-    exit
+    # test performance of window size
+    '''
+    exp_range = ExponentialRange(1, 4, 1/4)
+    with timed_report():
+        for i in exp_range.iterator():
+            for j in [5, 10, 20, 50, 100]:
+                mvgAvg2(series.iloc[:i], j)'''
+
