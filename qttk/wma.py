@@ -21,7 +21,7 @@ import numpy as np
 from qttk.profiler import time_this
 
 
-@time_this
+#@time_this
 def weighted_moving_avg_v1(values: pd.Series,
                            min_periods: int = 5) -> pd.Series:
     '''
@@ -55,7 +55,7 @@ def weighted_moving_avg_v1(values: pd.Series,
     return wma
 
 
-@time_this
+#@time_this
 def weighted_moving_avg_v2(values: pd.Series,
                            min_periods: int = 5) -> pd.Series:
     '''
@@ -110,7 +110,7 @@ def _np_weighted_moving_avg(values: np.array, min_periods: int = 5) -> np.array:
     return np.convolve(values, weights[::-1], 'valid')
 
 
-@time_this
+#@time_this
 def weighted_moving_avg_v3(values: pd.Series, min_periods: int = 5) -> pd.Series:
     '''
     Wrapper to use np_weighted_moving_avg function
@@ -138,7 +138,7 @@ if __name__ == '__main__':
     z = weighted_moving_avg_v3(series, 12)
     assert x.equals(y)
     if not x.equals(z):
-        print((x[12:] == z[12:]).value_counts())
+        print('\nX is not equal to Z: ', (x[12:] != z[12:]).value_counts())
         print(f'mean of difference: {np.mean((x[12:] - z[12:])) :.7f}\n')
     # assert x.equals(z) # inconsistent
 

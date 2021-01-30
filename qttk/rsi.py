@@ -15,9 +15,9 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from qttk.profiler import time_this
-#from qttk.profiler_v2 import time_this, timed_report
-#from qttk.profiler_v2 import ExponentialRange
+#from qttk.profiler import time_this
+from qttk.profiler_v2 import time_this, timed_report
+from qttk.profiler_v2 import ExponentialRange
 
 def load_sample_ticker():
     '''
@@ -59,6 +59,7 @@ def _save_data(filename, dataframe: pd.DataFrame):
     path = os.path.dirname(__file__)
     filename = os.path.join(path, '..', 'data', 'validation_data', '{}.csv'.format(filename))
     dataframe.to_csv(filename)
+
 
 def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
     '''
@@ -152,13 +153,4 @@ if __name__ == '__main__':
 
     # Execute unit tests
     test(window)
-    ''' todo: timed_report() raises 'n_values' error
-    # Performance Characterization
-    timed_report()
-    exp_range = ExponentialRange(1, 5, 1/4)
-
-    with timed_report():
-        for i in exp_range.iterator():
-            rsi_SPY = compute_rsi(dataframe, window)
-    '''
     exit

@@ -30,10 +30,8 @@ from qttk.profiler import time_this
 import pandas as pd
 import numpy as np
 import os
-#from profiler_v2 import time_this, timed_report
-#from profiler_v2 import ExponentialRange
 
-@time_this
+#@time_this
 def exponential_moving_average_v1(values:      pd.Series,
                                   com:         Optional[float] = None,
                                   span:        Optional[float] = None,
@@ -49,7 +47,7 @@ def exponential_moving_average_v1(values:      pd.Series,
     '''
     Accepts a series of values and returns an exponentially
        weighted moving average series
-    vanilla pandas.DataFrame.ewm() function
+    pandas.DataFrame.ewm() function
     '''
     return values.ewm(com=com,
                       span=span,
@@ -81,7 +79,7 @@ def _numpy_ewm_alpha_v2(values: np.array,
     out = pd.Series(out)
     return out[:values.size]
 
-@time_this
+#@time_this
 def exponential_moving_average_v2(values: pd.Series,
                                   alpha: float = 0,
                                   min_periods: int = 5) -> pd.Series:
@@ -93,7 +91,7 @@ def exponential_moving_average_v2(values: pd.Series,
     values = a
     return values
 
-@time_this
+#@time_this
 def exponential_moving_average_v3(values: pd.Series, min_periods: int = 5):
     '''
     Scipy alternative
@@ -105,107 +103,45 @@ def exponential_moving_average_v3(values: pd.Series, min_periods: int = 5):
     zi = lfiltic(b, a, values[0:1], [0])
     return lfilter(b, a, values, zi=zi)[0]
 
-def save_validation_data(function_name: str, data: pd.Series):
-    path = os.path.dirname(__file__)
-    filename = os.path.join(path, '..', 'data', 'validation_data', \
-    'EMA-ValidationData-{}.csv'.format(function_name))
-    #data = fillinValues(data)
-    data.to_csv(filename)
-
-def test(function_name: str, i):
-    from pandas.testing import assert_series_equal
-    from pandas.testing import assert_frame_equal
-
-    path = os.path.dirname(__file__)
-    filename = os.path.join(path, '..', 'data', 'validation_data', \
-    'EMA-ValidationData-output_{}.csv'.format(function_name))
-    validation_data = pd.read_csv(filename, index_col=0)
-
-    # to cross validate the functions against one another
-    if function_name == 'v1':
-        filename2 = os.path.join(path, '..', 'data', 'validation_data', \
-    'EMA-ValidationData-output_v2.csv')
-    elif function_name == 'v2':
-        filename2 = os.path.join(path, '..', 'data', 'validation_data', \
-    'EMA-ValidationData-output_v1.csv')
-    else:
-        filename2 = os.path.join(path, '..', 'data', 'validation_data', \
-    'EMA-ValidationData-output_v2.csv')
-
-    # defines input data and parameters for the EMA functions
-    series = pd.read_csv(os.path.join(path, '..', 'data', 'validation_data', \
-    'Validation-data_input.csv'))
-    mp = 5
-    a = 2/(mp + 1)
-    '''
-    # unit test cases:
-    x == x, _x == y, y == y, y == x, z == z, z == y
-
-    todo resolve DataFrame shape mismatch
-    line 153
-    [left]:  (1000000, 2)
-    [right]: (1000000, 1)
-    '''
-    if function_name == 'v1':
-        x = exponential_moving_average_v1(series, min_periods=mp, alpha=a)
-        x = pd.DataFrame(x)
-        assert_frame_equal(x, validation_data, check_dtype=False)
-        y = pd.read_csv(filename2)
-        assert_frame_equal(x, y, check_dtype=False)
-    elif function_name == 'v2':
-        y = exponential_moving_average_v2(series, min_periods=mp, alpha=a)
-        y = pd.DataFrame(y)
-        assert_frame_equal(y, validation_data, check_dtype=False)
-        x = pd.read_csv(filename2)
-        assert_frame_equal(y, x, check_dtype=False)
-    else:
-        z = exponential_moving_average_v2(series, min_periods=mp)
-        z = pd.DataFrame(z)
-        assert_frame_equal(z, validation_data, check_dtype=False)
-        y = pd.read_csv(filename2)
-        assert_frame_equal(z, y, check_dtype=False)
-
 
 if __name__ == '__main__':
 
-    i = 4 # exponent to generate 10**i range
+    i = 1 # exponent to generate 10**i range
 
-    from numpy.random import default_rng
-    rng = default_rng()
-    vals = rng.standard_normal(10**i)
-    series = pd.Series(vals)
-    #series = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    #from numpy.random import default_rng
+    #rng = default_rng()
+    #vals = rng.standard_normal(10**i)
+    #series = pd.Series(vals)
+    series = pd.Series(np.arange(0, 10**i))
     mp = 5
     a = 2/(mp + 1)
 
     x = exponential_moving_average_v1(series, min_periods=mp, alpha=a)
     y = exponential_moving_average_v2(series, min_periods=mp, alpha=a)
     z = exponential_moving_average_v3(series, min_periods=mp)
-
-    # these lines generate validation data for unit test cases:
-    #save_validation_data('data_input', series)
-    #save_validation_data('output_v1', x)
-    #save_validation_data('output_v2', x)
-    #save_validation_data('output_v3', x)
-
-    # implement unit test cases
-    test('v1', i)
-    test('v2', i)
-    test('v3', i)
+    z = pd.Series(z) # convert numpy.ndarray to Pandas series
 
     if not x.equals(y):
-        print((x[mp:] == y[mp:]).value_counts())
+        print('\nX not equal to Y: ', (x[mp:] != y[mp:]).value_counts())
         print(f'mean of difference: {np.mean((x[mp:] - y[mp:])) :.7f}\n')
+    if not y.equals(z):
+        print('Y not equal to Z: ', (y[mp:] != z[mp:]).value_counts())
+        print(f'mean of difference: {np.mean((y[mp:] - z[mp:])) :.7f}\n')
+    if not z.equals(x):
+        print('Z not equal to X: ', (z[mp:] != x[mp:]).value_counts())
+        print(f'mean of difference: {np.mean((z[mp:] - x[mp:])) :.7f}\n')
 
-    '''
-    todo implement timed_report() - raises n_values key value error
-    with timed_report():
-        for i in exp_range.iterator():
-            x = exponential_moving_average_v1(series.iloc[:i], min_periods=mp, alpha=a)
+    truth_series1 = pd.Series([np.nan, np.nan, np.nan, np.nan, 2.758294,\
+    3.577444, 4.435163, 5.324822, 6.240363, 7.176476])
 
-        for i in exp_range.iterator():
-            y = exponential_moving_average_v2(series.iloc[:i], min_periods=mp, alpha=a)
+    truth_series2 = pd.Series([np.nan, np.nan, np.nan, np.nan, 2.758294,\
+    3.758294, 4.758294, 5.758294, 6.758294, 7.758294])
 
-        for i in exp_range.iterator():
-            z = exponential_moving_average_v3(series.iloc[:i], min_periods=mp)
-    '''
+    truth_series3 = pd.Series([0.0, 0.333333, 0.888889, 1.592593, 2.395062,\
+    3.263374, 4.175583, 5.117055, 6.078037, 7.052025])
+
+    assert x.round(4).equals(truth_series1.round(4))
+    assert y.round(4).equals(truth_series2.round(4))
+    assert z.round(4).equals(truth_series3.round(4))
+
+    exit
