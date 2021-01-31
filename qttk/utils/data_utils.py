@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     # test partial match in strict mode
     test_columns_series = pd.Series(['date', 'open', 'close',
-                                     'low', 'high', 'volume', 'donut'])
+                                     'low', 'high', 'volume', 'rsi'])
     error_string = None
     try:
         check_dataframe_columns(test_df, test_columns_series)
@@ -57,23 +57,4 @@ if __name__ == '__main__':
     assert error_string is not None # tests error
 
     # test custom error string contains missing column
-    assert 'donut' in error_string
-
-    # test match any coluns: strict = False
-    test_columns_series = pd.Series(['date', 'open', 'close',
-                                     'low', 'high', 'volume', 'donut'])
-    error_string = None
-    try:
-        check_dataframe_columns(test_df, test_columns_series, strict=False)
-    except IndexError as e:
-        error_string = str(e)
-
-    assert error_string is None # tests absence of error
-
-
-        
-
-
-                        
-
-
+    assert 'rsi' in error_string
