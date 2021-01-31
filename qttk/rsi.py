@@ -60,6 +60,7 @@ def _save_data(filename, dataframe: pd.DataFrame):
     filename = os.path.join(path, '..', 'data', 'validation_data', '{}.csv'.format(filename))
     dataframe.to_csv(filename)
 
+
 def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
     '''
     rsi: Relative Strength Index
@@ -152,10 +153,10 @@ if __name__ == '__main__':
 
     # Execute unit tests
     test(window)
-    
+
     # Performance Characterization
     exp_range = ExponentialRange(1, 5, 1/4)
-    
+
     test_columns = ['date', 'open', 'close', 'low', 'high', 'volume']
     test_df = pd.DataFrame(np.random.rand(exp_range.max,6), columns=test_columns)
 
@@ -164,4 +165,3 @@ if __name__ == '__main__':
         for i in exp_range.iterator():
             # rsi_SPY = compute_rsi(dataframe, window)
             tt(compute_rsi)(test_df.iloc[:i], window)
-

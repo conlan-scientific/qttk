@@ -8,7 +8,7 @@ Production Ready Indicators Interface
   wma
 '''
 from qttk.rsi import compute_net_returns, compute_rsi
-from qttk.Bollinger_1 import bollinger, bollinger_demo
+from qttk.bollinger import bollinger, bollinger_demo
 from qttk.macd import macd
 from qttk.moving_average import moving_avg_v4 as compute_ma
 from qttk.cumulative_moving_average import cumulative_moving_avg_v2 as compute_cma

@@ -1,2 +1,1 @@
-import qttk.exponential_moving_average
 import qttk.indicators
