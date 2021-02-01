@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from qttk.utils.data_utils import check_dataframe_columns
 
-def bollinger(eod_data: pd.DataFrame,
+def compute_bollinger(eod_data: pd.DataFrame,
               moving_avg_window: int = 21,
               std_window: int = 21,
               volume_window: int = 50,
@@ -179,7 +179,7 @@ def bollinger_demo(data: str = None, data_file_path: Optional[str] = None,
         check_dataframe_columns(df, required_columns)
 
     #df.set_index('date', inplace=True) # set index when csv read
-    df = bollinger(df)
+    df = compute_bollinger(df)
     bb_graph_formatter(df)
     plt.autoscale()
 
