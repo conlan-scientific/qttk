@@ -56,7 +56,7 @@ def macd_graph_formatter(data_frame: pd.DataFrame) -> None:
     Relies on global import matplotlib.pyplot as plt
     '''
     # macd_data = data_frame[['open', 'close', 'low', 'high']]
-    fig, axs = plt.subplots(3, 1, figsize=(40, 20), gridspec_kw={'height_ratios': [3, 1, 1]})
+    fig, axs = plt.subplots(3, 1, figsize=(40, 20), gridspec_kw={'height_ratios': [3, 1, 2]})
     plt.subplots_adjust(hspace=0.4, bottom=0.3)
 
     # added formatting for axis labels
