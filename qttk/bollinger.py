@@ -114,7 +114,7 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     axs[1].bar(data_frame.index, data_frame['volume'])
     # axs[1].plot(data_frame.index, data_frame['MA_Volume'], color='black')
     axs[1].xaxis.set_major_locator(locator)
-    axs[1].set_ylabel('volume')
+    axs[1].set_ylabel('Volume')
     axs[1].grid(True)
 
     # %b Subplot
