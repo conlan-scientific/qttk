@@ -67,7 +67,9 @@ def graph_macd(data_frame: pd.DataFrame) -> None:
     formatter = mdates.ConciseDateFormatter(locator)
 
     axs[0].set_title('MACD')
-    axs[0].plot(data_frame[['MACD', 'MACD_MA']])
+    axs[0].plot(data_frame[['MACD']], label="MACD")
+    axs[0].plot(data_frame[['MACD_MA']], label="Signal Line")
+    axs[0].legend()
     axs[0].xaxis.set_major_locator(locator)
     axs[0].xaxis.set_major_formatter(formatter)
     axs[0].set_ylabel('MACD')
