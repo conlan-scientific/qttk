@@ -1,4 +1,4 @@
-'''
+"""
 A Bollinger Band® is a technical analysis tool defined by a set of trendlines plotted two standard deviations
     positively and negatively) away from a simple moving average (SMA) of a security's price, but which
     can be adjusted to user preferences.
@@ -9,24 +9,25 @@ This Module outputs a stacked graph featuring:
   %b
   Bandwidth
 
-'''
-
+"""
 import os
 import sys
 import glob
 import datetime as dt
 from typing import Any, Optional, Iterable
-import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+from progiler import time_this
 from qttk.utils.data_utils import check_dataframe_columns
 
 
-def compute_bollinger(eod_data: pd.DataFrame,
-                      moving_avg_window: int = 21,
-                      std_window: int = 21,
-                      volume_window: int = 50,
-                      multiplier: int = 2) -> pd.DataFrame:
+#@time_this
+def compute_bb(eod_data: pd.DataFrame,
+               moving_avg_window: int = 21,
+               std_window: int = 21,
+               volume_window: int = 50,
+               multiplier: int = 2) -> pd.DataFrame:
     """
     Assumes close feature is adjusted close.
     Prepares dataframe by adding features:
@@ -34,6 +35,8 @@ def compute_bollinger(eod_data: pd.DataFrame,
       Standard deviation(min_periods)
       Upper Bollinger Band
       Lower Bollinger Band
+
+      Completed compute_bb in 6.263 milliseconds
 
     Args:
         eod_data (pd.DataFrame): Open, High, Low, Close Volume dataframe
@@ -46,7 +49,7 @@ def compute_bollinger(eod_data: pd.DataFrame,
         pd.DataFrame: Columns added, MA_Close, std, BOLU, BOLD, MA_Volume, Bandwidth
     """
 
-    # Calcutlating a 21 day moving average
+    # Calculating a 21 day moving average
     eod_data['MA_Close'] = eod_data['close'].rolling(window=moving_avg_window).mean()
 
     # Calculating the standard deviation of the adjusted close
@@ -67,38 +70,23 @@ def compute_bollinger(eod_data: pd.DataFrame,
         .mean()
 
     # Tells us where we are in relation to the BB
-    # chart will have 2 additonal lines that are
-    #   21 day high and low to see how it fluctates
+    # chart will have 2 additional lines that are
+    # 21 day high and low to see how it fluctuates
     eod_data['pct_b'] = ((eod_data['close'] - eod_data['BOLD']) / (eod_data['BOLD'] - eod_data['BOLU']))
 
     # Tells us how wide the BB are
     # Lines are the highest and lowest values of bandwidth in the last 125 days
     # High is bulge low is squeeze
     eod_data['Bandwidth'] = (eod_data['BOLU'] - eod_data['BOLD']) / eod_data['MA_Close']
-    columns_to_fill = ['MA_Close', 'std', 'BOLU', 'BOLD', 'MA_Volume', 'Bandwidth']
-    eod_data.loc[:, columns_to_fill].fillna(0, inplace=True)
+    eod_data.loc[:, :].fillna(0, inplace=True)
 
     return eod_data
 
 
-def form_bb_graph(data_frame: pd.DataFrame) -> None:
-    '''
+def graph_bb(data_frame: pd.DataFrame) -> None:
+    """
     Relies on global import matplotlib.pyplot as plt
-
-    todo:
-      [x] create line chart into a candlestick
-      [ ] Change inf to zero or a better variable
-      [x] Create the 4 graphs on top of each other
-      [ ] Have a visual indicator on the graph to show it is buy/sell
-          I tried to added a 'signal' column and annotations - it was messy
-      [ ] Have an out response that says 3/4 of charts say this is a buy signal
-      [x] Can this run for all stocks in market/sector... Make a list of all companies and for loop for data
-          May want to add a CLI using argparse to produce a bunch of graphs
-      [n/a] turn parameter dataset to *args
-           Function expects a dataframe and can be called in a loop
-      [x] Keep axis labels neat
-
-    '''
+    """
     # bb_data = data_frame[['open', 'close', 'low', 'high']]
     fig, axs = plt.subplots(4, 1, figsize=(10, 6), gridspec_kw={'height_ratios': [3, 1, 1, 1]})
     plt.subplots_adjust(top=0.947, bottom=0.087, left=0.071, right=0.989, hspace=0.918, wspace=0.2)
@@ -117,8 +105,7 @@ def form_bb_graph(data_frame: pd.DataFrame) -> None:
     characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, which are short-hand
     notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
     '''
-    axs[0].scatter(data_frame.index, data_frame[['close']], s=1.0, c='k', \
-                   marker=',')
+    axs[0].scatter(data_frame.index, data_frame[['close']], s=1.0, c='k', marker=',')
     axs[0].xaxis.set_major_locator(locator)
     axs[0].xaxis.set_major_formatter(formatter)
     axs[0].set_ylabel('Price')
@@ -149,6 +136,7 @@ def form_bb_graph(data_frame: pd.DataFrame) -> None:
     axs[3].set_xlabel('Date')
     axs[3].set_ylabel('Bandwidth')
     axs[3].grid(True)
+    plt.show()
 
 
 def demo_bollinger(data: str = None, data_file_path: Optional[str] = None,
@@ -178,8 +166,8 @@ def demo_bollinger(data: str = None, data_file_path: Optional[str] = None,
         check_dataframe_columns(df, required_columns)
 
     # df.set_index('date', inplace=True) # set index when csv read
-    df = compute_bollinger(df)
-    form_bb_graph(df)
+    df = compute_bb(df)
+    graph_bb(df)
     plt.autoscale()
 
     if save_figure:
