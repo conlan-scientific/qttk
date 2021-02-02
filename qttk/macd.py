@@ -5,15 +5,15 @@ Moving average convergence divergence (MACD) is a trend-following momentum
     average (EMA) from the 12-period EMA.
 """
 import os
-import sys
-import glob
-from typing import Any, Optional, Iterable
-import datetime as dt
+#import datetime as dt
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
-from progiler import time_this
-from qttk.utils.data_utils import check_dataframe_columns
+
+
+#from typing import Any, Optional, Iterable
+#from profiler import time_this
+#from qttk.utils.data_utils import check_dataframe_columns
 
 
 #@time_this
