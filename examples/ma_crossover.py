@@ -8,7 +8,7 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./examples/ma_crossover.py
 
-# production version: 2021-01-28
+# production version: 2021-02-01
 '''
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -16,7 +16,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from qttk.indicators import ma
+from qttk.indicators import compute_ma
 '''
 Moving Average function:
 ma(dataframe_slice:pd.DataFrame, window:int)
@@ -52,14 +52,11 @@ if __name__ == '__main__':
     filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
 
-    ma_short = ma(dataframe['close'], 10)
-    ma_long = ma(dataframe['close'], 25)
+    ma_short = compute_ma(dataframe['close'], 10)
+    ma_long = compute_ma(dataframe['close'], 25)
 
-    ma_short = ma_short.set_index(dataframe.index)
-    ma_long = ma_long.set_index(dataframe.index)
-
-    dataframe['ma_short'] = ma_short.iloc[:, [0]]
-    dataframe['ma_long'] = ma_long.iloc[:, [0]]
+    dataframe['ma_short'] = ma_short
+    dataframe['ma_long'] = ma_long
 
     to_plot = dataframe.copy()
 

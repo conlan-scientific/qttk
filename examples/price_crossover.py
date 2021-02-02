@@ -7,7 +7,7 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./qttk/examples/price_crossover.py
 
-# production version: 2021-01-27
+# production version: 2021-02-01
 '''
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 import os
 
-from qttk.indicators import compute_rsi, bollinger
+from qttk.indicators import compute_rsi, compute_bollinger
 
 def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
     '''
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     rsi = compute_rsi(dataframe, window)
     to_plot = dataframe.copy()
-    bollinger(to_plot)
+    compute_bollinger(to_plot)
 
     x = -window                  # define the date range for plot to plot
     to_plot = to_plot.iloc[x:]
