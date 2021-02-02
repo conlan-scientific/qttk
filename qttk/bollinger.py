@@ -96,7 +96,6 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     '''
     # added formatting for axis labels
     locator = mdates.AutoDateLocator(minticks=5, maxticks=30)
-    formatter = mdates.ConciseDateFormatter(locator)
 
     axs[0].set_title('Bollinger Bands')
     # axs[0].boxplot(bb_data.T, whis=[0,100])
@@ -107,7 +106,6 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     '''
     axs[0].scatter(data_frame.index, data_frame[['close']], s=1.0, c='k', marker=',')
     axs[0].xaxis.set_major_locator(locator)
-    axs[0].xaxis.set_major_formatter(formatter)
     axs[0].set_ylabel('Price')
     axs[0].grid(True)
 
@@ -116,15 +114,13 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     axs[1].bar(data_frame.index, data_frame['volume'])
     # axs[1].plot(data_frame.index, data_frame['MA_Volume'], color='black')
     axs[1].xaxis.set_major_locator(locator)
-    axs[1].xaxis.set_major_formatter(formatter)
-    axs[1].set_ylabel('Volume')
+    axs[1].set_ylabel('volume')
     axs[1].grid(True)
 
     # %b Subplot
     axs[2].set_title('%B')
     axs[2].plot(data_frame.index, data_frame['pct_b'], color='black')
     axs[2].xaxis.set_major_locator(locator)
-    axs[2].xaxis.set_major_formatter(formatter)
     axs[2].set_ylabel('%B')
     axs[2].grid(True)
 
@@ -132,7 +128,6 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     axs[3].set_title('Bandwidth')
     axs[3].plot(data_frame.index, data_frame['Bandwidth'], color='black')
     axs[3].xaxis.set_major_locator(locator)
-    axs[3].xaxis.set_major_formatter(formatter)
     axs[3].set_xlabel('Date')
     axs[3].set_ylabel('Bandwidth')
     axs[3].grid(True)
