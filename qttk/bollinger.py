@@ -19,7 +19,7 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
 #from progiler import time_this
-#from qttk.utils.data_utils import check_dataframe_columns
+from qttk.utils.data_utils import check_dataframe_columns
 
 
 #@time_this
