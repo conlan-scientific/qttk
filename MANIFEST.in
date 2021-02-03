@@ -1,0 +1,5 @@
+recursive-include data/ *
+recursive-include qttk/ *.py
+include qttk/version.txt
+
+
