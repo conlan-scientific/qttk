@@ -13,7 +13,7 @@ import pandas as pd
 
 from typing import Any, Optional, Iterable
 #from profiler import time_this
-#from qttk.utils.data_utils import check_dataframe_columns
+from qttk.utils.data_utils import check_dataframe_columns
 
 
 #@time_this
@@ -64,12 +64,12 @@ def graph_macd(data_frame: pd.DataFrame) -> None:
 
     # added formatting for axis labels
     locator = mdates.AutoDateLocator(minticks=5, maxticks=30)
-    formatter = mdates.ConciseDateFormatter(locator)
 
     axs[0].set_title('MACD')
-    axs[0].plot(data_frame[['MACD', 'MACD_MA']])
+    axs[0].plot(data_frame[['MACD']], label="MACD")
+    axs[0].plot(data_frame[['MACD_MA']], label="Signal Line")
+    axs[0].legend()
     axs[0].xaxis.set_major_locator(locator)
-    axs[0].xaxis.set_major_formatter(formatter)
     axs[0].set_ylabel('MACD')
     axs[0].grid(True)
 
@@ -78,15 +78,13 @@ def graph_macd(data_frame: pd.DataFrame) -> None:
     axs[1].bar(data_frame.index, data_frame['MACD'])
     axs[1].plot(data_frame.index, data_frame['MACD_MA'], color='black')
     axs[1].xaxis.set_major_locator(locator)
-    axs[1].xaxis.set_major_formatter(formatter)
-    axs[1].set_ylabel('Volume')
+    axs[1].set_ylabel('MACD')
     axs[1].grid(True)
 
     # price Subplot
     axs[2].set_title('Price')
     axs[2].plot(data_frame.index, data_frame['close'], color='black')
     axs[2].xaxis.set_major_locator(locator)
-    axs[2].xaxis.set_major_formatter(formatter)
     axs[2].set_xlabel('Date')
     axs[2].set_ylabel('Price')
     axs[2].grid(True)
