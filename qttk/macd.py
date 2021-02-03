@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-#from typing import Any, Optional, Iterable
+from typing import Any, Optional, Iterable
 #from profiler import time_this
 #from qttk.utils.data_utils import check_dataframe_columns
 
