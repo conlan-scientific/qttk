@@ -57,7 +57,7 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
 if __name__ == '__main__':
     path = os.path.dirname(__file__)
     ticker = 'DLVY'
-    filename = os.path.join(path, '..', 'qttk','data', 'eod', ticker+'.csv')
+    filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
 
     window = 30
