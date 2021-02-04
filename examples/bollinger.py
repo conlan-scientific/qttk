@@ -11,14 +11,11 @@
 '''
 import pandas as pd
 import os
-from qttk.indicators import compute_bollinger, demo_bollinger
+from qttk.indicators import compute_bb, demo_bollinger
 
 if __name__ == '__main__':
     required_ohlcv_columns = pd.Series(['open', 'high', 'low', 'close', 'volume'])
     path = os.path.dirname(__file__)
-    ticker = 'AWU'
-    filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
-    dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
 
     data = 'AWU.csv' # name of data file to use
     demo_bollinger(data, required_columns=required_ohlcv_columns)

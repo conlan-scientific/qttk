@@ -7,7 +7,7 @@
 # run from project root directory:
     C:/Users/user/qttk>ipython -i ./qttk/portfolio.py
 
-# production version: 2021-02-02
+# production version: 2021-02-03
 '''
 from datetime import datetime
 import pandas as pd
@@ -24,7 +24,7 @@ def load_portfolio(stocks: list) -> pd.DataFrame:
     path = os.path.dirname(__file__)
     dataframe = pd.DataFrame()
     for stock in stocks:
-        filename = os.path.join(path, '..', 'data', 'eod', stock+'.csv')
+        filename = os.path.join(path, 'data', 'eod', stock+'.csv')
         dataload = pd.read_csv(filename, index_col=0, parse_dates=True)
         dataframe[stock] = dataload['close']
     return dataframe
@@ -38,8 +38,8 @@ def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
     Fill in NaN values
     '''
     dataframe.fillna(method='ffill', inplace=True)
-    dataframe.fillna(method='bfill', inplace=True)
     return dataframe
+    dataframe.fillna(method='bfill', inplace=True)
 
 
 if __name__ == '__main__':
@@ -49,7 +49,8 @@ if __name__ == '__main__':
     # weights must add up to 1.0 (100%)
     weights = [0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10, 0.10]
     dataframe = load_portfolio(stocks)
-    series = portfolio_price_series(weights, dataframe)
-    sharpe = calculate_sharpe_ratio(series)
+    series = portfolio_price_series(weights, dataframe.iloc[:252])
+    sharpe = np.around(calculate_sharpe_ratio(series), 2)
+    assert sharpe == 2.16
     print('Portfolio: \n', dataframe.columns.values, '\nWeights: ', weights)
     print('Sharpe Ratio: ', sharpe)
