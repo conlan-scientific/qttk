@@ -24,7 +24,7 @@ def load_ticker(ticker: str) -> pd.Series:
     Loads EOD data
     """
     path = os.path.dirname(__file__)
-    filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
+    filename = os.path.join(path, 'data', 'eod', ticker+'.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
     series = dataframe['close']
     return series

@@ -151,7 +151,7 @@ def demo_bollinger(data: str = None, data_file_path: Optional[str] = None,
 
     else:  # use relative path and example file
         script_dir = os.path.dirname(__file__)
-        csv_files = os.path.join(script_dir, '..', 'data', 'eod')
+        csv_files = os.path.join(script_dir,  'data', 'eod')
         csv_file = os.path.join(csv_files, data)
 
     df = pd.read_csv(csv_file, index_col=0, parse_dates=True)
@@ -181,6 +181,6 @@ if __name__ == '__main__':
 
     # optional loop
     # script_dir = os.path.dirname(__file__)
-    # csv_files = os.path.join(script_dir, '..', 'data', 'eod', '*.csv')
+    # csv_files = os.path.join(script_dir,  'data', 'eod', '*.csv')
     # for csv_file in glob.glob(csv_files):
     #    main(csv_file)

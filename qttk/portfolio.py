@@ -24,7 +24,7 @@ def load_portfolio(stocks: list) -> pd.DataFrame:
     path = os.path.dirname(__file__)
     dataframe = pd.DataFrame()
     for stock in stocks:
-        filename = os.path.join(path, '..', 'data', 'eod', stock+'.csv')
+        filename = os.path.join(path, 'data', 'eod', stock+'.csv')
         dataload = pd.read_csv(filename, index_col=0, parse_dates=True)
         dataframe[stock] = dataload['close']
     return dataframe

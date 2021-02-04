@@ -27,7 +27,7 @@ def load_sample_data(ticker: str) -> pd.DataFrame:
             dtype: object
     """
     pwd = os.path.dirname(__file__)
-    data_dir = os.path.join(pwd, '..', '..', 'data', 'eod')
+    data_dir = os.path.join(pwd,  '..', 'data', 'eod')
     ticker_csv = os.path.join(data_dir, f'{ticker.upper()}.csv')
     assert os.path.exists(ticker_csv), f"{ticker.upper()}.csv not found"
     return pd.read_csv(ticker_csv)
@@ -41,11 +41,11 @@ def list_tickers() -> List[str]:
         List: unfiltered list of all files in directory
     """
     pwd = os.path.dirname(__file__)
-    data_dir = os.path.join(pwd, '..', '..', 'data', 'eod')
+    data_dir = os.path.join(pwd,  '..', 'data', 'eod')
     return os.listdir(data_dir)
 
 
 if __name__ == '__main__':
-    present_working_directory = os.path.dirname(__file__)
-    data_directory = os.path.join(present_working_directory, '..', '..', 'data', 'eod')
+    currdir = os.path.dirname(__file__)
+    data_directory = os.path.join(currdir,  '..', 'data', 'eod')
     assert os.path.exists(data_directory)
