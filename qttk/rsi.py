@@ -24,7 +24,7 @@ def load_sample_ticker():
     Loads example EOD data for SPY
     '''
     path = os.path.dirname(__file__)
-    filename = os.path.join(path, '..', 'data', 'SPY.csv')
+    filename = os.path.join(path, 'data', 'SPY.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
     return dataframe
 
@@ -57,7 +57,7 @@ def _save_data(filename, dataframe: pd.DataFrame):
     # _save_data is a convenience method to save data to .csv file
     # dataframe needs to be a Pandas dataframe
     path = os.path.dirname(__file__)
-    filename = os.path.join(path, '..', 'data', 'validation_data', '{}.csv'.format(filename))
+    filename = os.path.join(path, 'data', 'validation_data', '{}.csv'.format(filename))
     dataframe.to_csv(filename)
 
 
@@ -126,7 +126,7 @@ def test(window):
     from pandas._testing import assert_series_equal
 
     path = os.path.dirname(__file__)
-    filename_rets = os.path.join(path, '..', 'data', 'validation_data', 'rets_SPY.csv')
+    filename_rets = os.path.join(path, 'data', 'validation_data', 'rets_SPY.csv')
     test_rets_validated = pd.read_csv(filename_rets, index_col=0, parse_dates=True)
     test_rets = pd.DataFrame(compute_net_returns(dataframe))
     assert_frame_equal(test_rets_validated, test_rets)
@@ -135,7 +135,7 @@ def test(window):
     if window != 14:
         window = 14
 
-    filename_rsi = os.path.join(path, '..', 'data', 'validation_data', 'rsi_SPY.csv')
+    filename_rsi = os.path.join(path, 'data', 'validation_data', 'rsi_SPY.csv')
     test_rsi_validated = pd.read_csv(filename_rsi, index_col=0, parse_dates=True)
     test_rsi_series = test_rsi_validated.iloc[:, 0]
     test_rsi = compute_rsi(dataframe, window)

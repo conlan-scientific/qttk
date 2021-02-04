@@ -25,13 +25,11 @@ base_path = os.path.dirname(__file__)
 
 sma_validation_data = os.path.join(base_path,
                             '..',
-                            '..',
                             'data',
                             'validation_data',
                             'sma_validation_data.csv')
 
 cma_validation_data = os.path.join(base_path, 
-                            '..',
                             '..',
                             'data',
                             'validation_data',
@@ -39,13 +37,11 @@ cma_validation_data = os.path.join(base_path,
 
 wma_validation_data = os.path.join(base_path, 
                             '..',
-                            '..',
                             'data',
                             'validation_data',
                             'wma_validation_data.csv')
 
 ema_validation_data = os.path.join(base_path, 
-                            '..',
                             '..',
                             'data',
                             'validation_data',
