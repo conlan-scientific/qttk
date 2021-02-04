@@ -92,11 +92,13 @@ if __name__ == '__main__':
     print('Symbol: ', ticker)
     print('Sharpe Ratio: ', sharpe)
 
-    exp_range = ExponentialRange(1, 4, 1/4)
+    exp_range = ExponentialRange(4, 8, 1/4)
     test_columns = ['date', 'open', 'close', 'low', 'high', 'volume']
-    test_df = pd.DataFrame(np.random.rand(exp_range.max,6),
-                           columns=test_columns,
-                           index=pd.date_range('12-12-1900', periods=exp_range.max))
+    test_df = pd.DataFrame(
+        np.random.rand(exp_range.max, 6),
+        columns=test_columns,
+        index=pd.date_range('01-01-1900', periods=exp_range.max, freq=pd.Timedelta(seconds=10))
+    )
 
     with timed_report():
         tt = time_this(lambda *args, **kwargs: args[0].shape[0])
