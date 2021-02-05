@@ -30,8 +30,47 @@ from qttk.profiler import time_this
 import pandas as pd
 import numpy as np
 import os
+import gc
+from profiler_v2 import time_this, ExponentialRange, timed_report
 
-#@time_this
+
+def simple_ema(values: pd.Series, alpha:float, window:int) -> pd.Series:
+    '''
+    Simple Exponential Moving Average
+    alpha is usually between .1 and .3
+
+    '''
+    # initialize
+    ema = pd.Series([np.nan]*values.shape[0], name='ema')
+
+    # initialize first ema with simple moving average
+    sma = pd.Series(values[:window].sum()/window)
+
+    ema.iloc[window - 1] = (alpha * values.iloc[window-1]) + ((1-alpha) * sma)
+
+    for i in range(window, values.shape[0]):
+        ema.iloc[i] = alpha * values.iloc[i-1] + (1-alpha) * ema.iloc[i-1]
+
+    return ema
+
+
+def python_simple_ema(values: List, alpha:float, window:int) ->List:
+    '''
+    Python simple Exponential Moving Average
+    '''
+    # initializea
+    ema = [None] * len(values)
+
+    #initialize first ema with simple moving average
+    sma = sum(values[:window])/window
+    ema[window-1] = (alpha * values[window-1]) + (1-alpha) * sma
+
+    for i in range(window, len(values)):
+        ema[i] = (alpha*values[i-1]) + (1 - alpha) * ema[i-1]
+
+    return ema
+
+
 def exponential_moving_average_v1(values:      pd.Series,
                                   com:         Optional[float] = None,
                                   span:        Optional[float] = None,
@@ -59,6 +98,7 @@ def exponential_moving_average_v1(values:      pd.Series,
                       axis=axis,
                       times=times).mean()
 
+
 def _numpy_ewm_alpha_v2(values: np.array,
                         alpha: float = 0,
                         min_periods: int = 0) -> np.array:
@@ -79,6 +119,7 @@ def _numpy_ewm_alpha_v2(values: np.array,
     out = pd.Series(out)
     return out[:values.size]
 
+
 #@time_this
 def exponential_moving_average_v2(values: pd.Series,
                                   alpha: float = 0,
@@ -90,6 +131,7 @@ def exponential_moving_average_v2(values: pd.Series,
     a = _numpy_ewm_alpha_v2(values.values, alpha=alpha, min_periods=min_periods)
     values = a
     return values
+    
 
 #@time_this
 def exponential_moving_average_v3(values: pd.Series, min_periods: int = 5):
@@ -114,12 +156,15 @@ if __name__ == '__main__':
     #series = pd.Series(vals)
     series = pd.Series(np.arange(0, 10**i))
     mp = 5
-    a = 2/(mp + 1)
+    alpha = 2/(mp + 1)
 
-    x = exponential_moving_average_v1(series, min_periods=mp, alpha=a)
-    y = exponential_moving_average_v2(series, min_periods=mp, alpha=a)
+    x = exponential_moving_average_v1(series, min_periods=mp, alpha=alpha)
+    y = exponential_moving_average_v2(series, min_periods=mp, alpha=alpha)
     z = exponential_moving_average_v3(series, min_periods=mp)
     z = pd.Series(z) # convert numpy.ndarray to Pandas series
+    a = simple_ema(series, alpha=alpha, window=mp)
+    b = python_simple_ema(series.to_list(), alpha=alpha, window=mp)
+    b = pd.Series(b)
 
     if not x.equals(y):
         print('\nX not equal to Y: ', (x[mp:] != y[mp:]).value_counts())
@@ -131,6 +176,15 @@ if __name__ == '__main__':
         print('Z not equal to X: ', (z[mp:] != x[mp:]).value_counts())
         print(f'mean of difference: {np.mean((z[mp:] - x[mp:])) :.7f}\n')
 
+    if not x.equals(a):
+        print('a not equal to X: ', (z[mp:] != x[mp:]).value_counts())
+        print(f'mean of difference: {np.mean((a[mp:] - x[mp:])) :.7f}\n')
+
+    if not x.equals(b):
+        print('b not equal to X: ', (b[mp:] != x[mp:]).value_counts())
+        print(f'mean of difference: {np.mean((b[mp:] - x[mp:])) :.7f}\n')
+
+
     truth_series1 = pd.Series([np.nan, np.nan, np.nan, np.nan, 2.758294,\
     3.577444, 4.435163, 5.324822, 6.240363, 7.176476])
 
@@ -140,6 +194,46 @@ if __name__ == '__main__':
     truth_series3 = pd.Series([0.0, 0.333333, 0.888889, 1.592593, 2.395062,\
     3.263374, 4.175583, 5.117055, 6.078037, 7.052025])
 
-    assert x.round(4).equals(truth_series1.round(4))
-    assert y.round(4).equals(truth_series2.round(4))
-    assert z.round(4).equals(truth_series3.round(4))
+    assert x.round(4).equals(truth_series1.round(4)), "truth series .4f failed"
+    assert y.round(4).equals(truth_series2.round(4)), "truth series .4f failed"
+    assert z.round(4).equals(truth_series3.round(4)), "truth series .4f failed"
+    #assert a.round(4).equals(truth_series3.round(4)), "truth series .4f failed"
+    #assert b.round(4).equals(truth_series3.round(4)), "truth series .4f failed"
+
+    exp_range = ExponentialRange(1, 8, 1/4)
+    series = pd.Series(np.random.random(exp_range.max))
+
+    with timed_report():
+        tt = time_this(lambda *args, **kwargs: args[0].shape[0])
+
+        for i in exp_range.iterator():
+            tt(exponential_moving_average_v1)(series.iloc[:i],
+                                              min_periods=mp,
+                                              alpha=alpha)
+        
+        gc.collect()
+        for i in exp_range.iterator():            
+            tt(exponential_moving_average_v2)(series.iloc[:i],
+                                              min_periods=mp,
+                                              alpha=alpha)
+
+        gc.collect()
+        for i in exp_range.iterator():
+            tt(exponential_moving_average_v3)(series.iloc[:i],
+                                              min_periods=mp)
+
+        gc.collect()
+        for i in exp_range.iterator(4):
+            tt(simple_ema)(series.iloc[:i],
+                           alpha=alpha,
+                           window=mp)
+
+        gc.collect()
+        tt = time_this(lambda *args, **kwargs: len(args[0]))
+        for i in exp_range.iterator(4):
+            tt(python_simple_ema)(series.iloc[:i].tolist(),
+                                  alpha=alpha,
+                                  window=mp)
+
+
+
