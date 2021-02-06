@@ -26,7 +26,7 @@ from qttk.utils.data_utils import check_dataframe_columns
 def compute_bb(eod_data: pd.DataFrame,
                moving_avg_window: int = 21,
                std_window: int = 21,
-               volume_window: int = 50,
+               volume_window: Optional[int] = 50,
                multiplier: int = 2) -> pd.DataFrame:
     """
     Assumes close feature is adjusted close.
@@ -65,9 +65,11 @@ def compute_bb(eod_data: pd.DataFrame,
 
     # Calculating the 50 day average volume
     # Both volume and the 50 day average will be plotted as line graphs
-    eod_data['MA_Volume'] = eod_data['volume'] \
+    try:
+        eod_data['MA_Volume'] = eod_data['volume'] \
         .rolling(window=volume_window) \
         .mean()
+    except KeyError: None
 
     # Tells us where we are in relation to the BB
     # chart will have 2 additional lines that are

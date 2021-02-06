@@ -2,13 +2,17 @@
 # Quantitative Trading ToolKit (qttk)
 # https://github.com/conlan-scientific/qttk
 
-# price_crossover.py - Price Crossover Example
+# portfolio_example.py - Portfolio Example
 
 # run from project directory:
-    C:/Users/user/qttk>ipython -i ./qttk/examples/price_crossover.py
+    C:/Users/user/qttk>ipython -i ./qttk/examples/portfolio_example.py
 
-# production version: 2021-02-01
+# production version: 2021-02-05
 '''
+from qttk.indicators import calculate_sharpe_ratio, portfolio_price_series
+from qttk.indicators import compute_rsi, compute_bb
+from qttk.indicators import load_data
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
@@ -16,7 +20,6 @@ import pandas as pd
 import numpy as np
 import os
 
-from qttk.indicators import compute_rsi, compute_bb
 
 def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
     '''
@@ -53,17 +56,24 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
 
     plt.show()
 
-
 if __name__ == '__main__':
-    path = os.path.dirname(__file__)
-    ticker = 'DLVY'
-    filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
-    dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
+    # define portfolio- stocks and weights
+    stocks = ['AWU', 'AXC', 'BGN', 'BMG', 'DVRL', 'EHH', 'EUZ', 'EXY', 'FJKV', 'KUAQ']
+    # an equally weighted portfolio is assumed
+    # weights must add up to 1.0 (100%)
+    weights = np.full((1,len(stocks)), 1/len(stocks))
+    portfolio = pd.DataFrame(weights, columns=stocks)
+    dataframe = load_data(portfolio.columns.values)
+    series = portfolio_price_series(weights, dataframe.iloc[-252:])
+    sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
+    print(dataframe.describe().round(2))
+    print('Sharpe Ratio: ', sharpe)
 
-    window = 30
+    ticker = 'Portfolio'
+    window = 30  # interval needed for compute_rsi
 
-    rsi = compute_rsi(dataframe, window)
-    to_plot = dataframe.copy()
+    to_plot=pd.DataFrame(series, columns=['close'])
+    rsi = compute_rsi(to_plot, window)
     compute_bb(to_plot)
 
     x = -window                  # define the date range for plot to plot

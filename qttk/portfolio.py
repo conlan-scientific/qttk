@@ -40,7 +40,6 @@ if __name__ == '__main__':
     dataframe = load_data(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[:252])
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
-    #print(dataframe.head())
     print(dataframe.describe().round(2))
     print('Sharpe Ratio: ', sharpe)
     assert sharpe == 2.0

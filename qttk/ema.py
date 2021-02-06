@@ -31,7 +31,7 @@ import pandas as pd
 import numpy as np
 import os
 import gc
-from profiler_v2 import time_this, ExponentialRange, timed_report
+from qttk.profiler_v2 import time_this, ExponentialRange, timed_report
 
 
 def simple_ema(values: pd.Series, alpha:float, window:int) -> pd.Series:
@@ -131,7 +131,7 @@ def exponential_moving_average_v2(values: pd.Series,
     a = _numpy_ewm_alpha_v2(values.values, alpha=alpha, min_periods=min_periods)
     values = a
     return values
-    
+
 
 #@time_this
 def exponential_moving_average_v3(values: pd.Series, min_periods: int = 5):
@@ -210,9 +210,9 @@ if __name__ == '__main__':
             tt(exponential_moving_average_v1)(series.iloc[:i],
                                               min_periods=mp,
                                               alpha=alpha)
-        
+
         gc.collect()
-        for i in exp_range.iterator():            
+        for i in exp_range.iterator():
             tt(exponential_moving_average_v2)(series.iloc[:i],
                                               min_periods=mp,
                                               alpha=alpha)
@@ -234,6 +234,3 @@ if __name__ == '__main__':
             tt(python_simple_ema)(series.iloc[:i].tolist(),
                                   alpha=alpha,
                                   window=mp)
-
-
-
