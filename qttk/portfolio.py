@@ -14,23 +14,12 @@ import pandas as pd
 import numpy as np
 import os
 from qttk.indicators import calculate_sharpe_ratio
+from qttk.indicators import load_data
 from qttk.profiler import time_this
 
 
-def load_portfolio(stocks: list) -> pd.DataFrame:
-    '''
-    Loads example EOD data for portfolio of 10 instruments
-    '''
-    path = os.path.dirname(__file__)
-    dataframe = pd.DataFrame()
-    for stock in stocks:
-        filename = os.path.join(path, 'data', 'eod', stock+'.csv')
-        dataload = pd.read_csv(filename, index_col=0, parse_dates=True)
-        dataframe[stock] = dataload['close']
-    return dataframe
-
 def portfolio_price_series(wt: list, df: pd.DataFrame) -> pd.DataFrame:
-    port_price = np.sum(wt * df, axis=1)
+    port_price = _fillinValues(np.sum(wt * df, axis=1))
     return port_price
 
 def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
@@ -48,9 +37,10 @@ if __name__ == '__main__':
     stocks = ['AWU', 'AXC', 'BGN', 'BMG', 'DVRL', 'EHH', 'EUZ', 'EXY', 'FJKV', 'KUAQ']
     weights = np.full((1,len(stocks)), 1/len(stocks)) # an equally weighted portfolio is assumed
     portfolio = pd.DataFrame(weights, columns=stocks)
-    dataframe = load_portfolio(portfolio.columns.values)
+    dataframe = load_data(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[:252])
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
-    assert sharpe == 2.0
-    print('Portfolio: \n', dataframe.columns.values, '\nWeights: ', weights)
+    #print(dataframe.head())
+    print(dataframe.describe().round(2))
     print('Sharpe Ratio: ', sharpe)
+    assert sharpe == 2.0
