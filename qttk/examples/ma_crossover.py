@@ -10,13 +10,16 @@
 
 # production version: 2021-02-01
 '''
+from qttk.indicators import compute_ma
+from qttk.indicators import load_data
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from qttk.indicators import compute_ma
+
 '''
 Moving Average function:
 ma(dataframe_slice:pd.DataFrame, window:int)
@@ -47,10 +50,8 @@ def _plot(ticker:str, ticker_data: pd.DataFrame) -> None:
 
 
 if __name__ == '__main__':
-    path = os.path.dirname(__file__)
     ticker = 'DLVY'
-    filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
-    dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
+    dataframe = load_data(ticker)
 
     ma_short = compute_ma(dataframe['close'], 10)
     ma_long = compute_ma(dataframe['close'], 25)

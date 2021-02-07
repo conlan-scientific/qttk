@@ -19,7 +19,7 @@ from qttk.profiler import time_this
 
 
 def portfolio_price_series(wt: list, df: pd.DataFrame) -> pd.DataFrame:
-    port_price = _fillinValues(np.sum(wt * df, axis=1))
+    port_price = np.sum(wt * df, axis=1)
     return port_price
 
 def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
@@ -40,7 +40,6 @@ if __name__ == '__main__':
     dataframe = load_data(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[:252])
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
-    #print(dataframe.head())
     print(dataframe.describe().round(2))
     print('Sharpe Ratio: ', sharpe)
     assert sharpe == 2.0
