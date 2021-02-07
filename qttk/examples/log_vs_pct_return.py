@@ -40,11 +40,11 @@ if __name__ == '__main__':
     # create histogram for log and percent return
     fig, axes = plt.subplots(nrows=1, ncols=2)
     
-    close_df = load_data(['AWU'])
+    close_df = load_data('AWU')[['close']]
     close_df['fv'] = close_df.shift(50)
     close_df = close_df[50:]
-    close_df['pct'] = (close_df['fv']-close_df['AWU'])/close_df['AWU']
-    close_df['log'] = np.log(close_df['fv']/close_df['AWU'])
+    close_df['pct'] = (close_df['fv']-close_df['close'])/close_df['close']
+    close_df['log'] = np.log(close_df['fv']/close_df['close'])
     
     close_pct_hist = close_df['pct'].hist(ax=axes[0])
     close_pct_hist.title = plt.title('Percent Return')
