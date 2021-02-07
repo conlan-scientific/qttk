@@ -19,7 +19,7 @@ from qttk.profiler import time_this
 
 
 def portfolio_price_series(wt: list, df: pd.DataFrame) -> pd.DataFrame:
-    port_price = _fillinValues(np.sum(wt * df, axis=1))
+    port_price = np.sum(wt * df, axis=1)
     return port_price
 
 def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
