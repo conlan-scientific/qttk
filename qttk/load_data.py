@@ -3,8 +3,9 @@
 # https://github.com/conlan-scientific/qttk
 
 # load_data.py - a convenience utlity that loads sample data
-# input: a list of sample stock symbols from /data/eod/
-# returns a dataframe with the closing prices of each symbol
+# input: accepts a single ticker symbol or a list of sample stock symbols
+# from /data/eod/
+# output: returns a dataframe with the closing prices of each symbol
 
 # production version: 2021-02-06
 '''

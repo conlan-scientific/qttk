@@ -9,9 +9,10 @@
 
 # production version: 2021-02-01
 '''
+from qttk.indicators import compute_bb, demo_bollinger
 import pandas as pd
 import os
-from qttk.indicators import compute_bb, demo_bollinger
+
 
 if __name__ == '__main__':
     required_ohlcv_columns = pd.Series(['open', 'high', 'low', 'close', 'volume'])

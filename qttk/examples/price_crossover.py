@@ -9,14 +9,16 @@
 
 # production version: 2021-02-01
 '''
-import matplotlib.pyplot as plt
+from qttk.indicators import compute_rsi, compute_bb
+from qttk.indicators import load_data
+
 import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
 
-from qttk.indicators import compute_rsi, compute_bb
 
 def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
     '''
@@ -55,10 +57,8 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
 
 
 if __name__ == '__main__':
-    path = os.path.dirname(__file__)
     ticker = 'DLVY'
-    filename = os.path.join(path, '..', 'data', 'eod', ticker+'.csv')
-    dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
+    dataframe = load_data(ticker)
 
     window = 30
 

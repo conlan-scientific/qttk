@@ -10,14 +10,16 @@
 
 # production version: 2021-02-01
 '''
+from qttk.indicators import compute_ma
+from qttk.indicators import load_data
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from qttk.indicators import compute_ma
-from qttk.indicators import load_data
+
 '''
 Moving Average function:
 ma(dataframe_slice:pd.DataFrame, window:int)
