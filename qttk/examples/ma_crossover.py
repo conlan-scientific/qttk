@@ -11,7 +11,7 @@
 # production version: 2021-02-01
 '''
 from qttk.indicators import compute_ma
-from qttk.indicators import load_data
+from qttk.utils.sample_data import load_sample_data
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -51,7 +51,7 @@ def _plot(ticker:str, ticker_data: pd.DataFrame) -> None:
 
 if __name__ == '__main__':
     ticker = 'DLVY'
-    dataframe = load_data(ticker)
+    dataframe = load_sample_data(ticker)
 
     ma_short = compute_ma(dataframe['close'], 10)
     ma_long = compute_ma(dataframe['close'], 25)

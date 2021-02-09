@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np
 import os
 from qttk.indicators import calculate_sharpe_ratio
-from qttk.indicators import load_data
+from qttk.utils.sample_data import load_portfolio
 from qttk.profiler import time_this
 
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     stocks = ['AWU', 'AXC', 'BGN', 'BMG', 'DVRL', 'EHH', 'EUZ', 'EXY', 'FJKV', 'KUAQ']
     weights = np.full((1,len(stocks)), 1/len(stocks)) # an equally weighted portfolio is assumed
     portfolio = pd.DataFrame(weights, columns=stocks)
-    dataframe = load_data(portfolio.columns.values)
+    dataframe = load_portfolio(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[:252])
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
     print(dataframe.describe().round(2))

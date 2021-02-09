@@ -7,10 +7,10 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./qttk/examples/price_crossover.py
 
-# production version: 2021-02-01
+# production version: 2021-02-08
 '''
 from qttk.indicators import compute_rsi, compute_bb
-from qttk.indicators import load_data
+from qttk.utils.sample_data import load_sample_data
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -58,7 +58,7 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
 
 if __name__ == '__main__':
     ticker = 'DLVY'
-    dataframe = load_data(ticker)
+    dataframe = load_sample_data(ticker)
 
     window = 30
 
