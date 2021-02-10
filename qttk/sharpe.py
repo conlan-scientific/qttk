@@ -86,7 +86,7 @@ def calculate_sharpe_ratio(price_series: pd.Series,
 
 if __name__ == '__main__':
     # load data
-    ticker = 'IRX'
+    ticker = 'HECP'
     series = load_ticker(ticker)
     sharpe = calculate_sharpe_ratio(series)
     print('Symbol: ', ticker)

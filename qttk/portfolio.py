@@ -34,7 +34,7 @@ def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
 if __name__ == '__main__':
     # define portfolio- stocks and weights
     # weights must add up to 1.0 (100%)
-    stocks = ['AWU', 'AXC', 'BGN', 'BMG', 'DVRL', 'EHH', 'EUZ', 'EXY', 'FJKV', 'KUAQ']
+    stocks = ['AWU', 'HECP', 'HRVC', 'HXX', 'NSLG', 'PQCE', 'RZW', 'TRE', 'WFS', 'ZGL']
     weights = np.full((1,len(stocks)), 1/len(stocks)) # an equally weighted portfolio is assumed
     portfolio = pd.DataFrame(weights, columns=stocks)
     dataframe = load_portfolio(portfolio.columns.values)
@@ -42,4 +42,4 @@ if __name__ == '__main__':
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
     print(dataframe.describe().round(2))
     print('Sharpe Ratio: ', sharpe)
-    assert sharpe == 2.0
+    assert sharpe

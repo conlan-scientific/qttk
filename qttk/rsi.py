@@ -21,10 +21,10 @@ from qttk.profiler_v2 import ExponentialRange
 
 def load_sample_ticker():
     '''
-    Loads example EOD data for SPY
+    Loads example EOD data for YPS
     '''
     path = os.path.dirname(__file__)
-    filename = os.path.join(path, 'data', 'SPY.csv')
+    filename = os.path.join(path, 'data', 'eod', 'YPS.csv')
     dataframe = pd.read_csv(filename, index_col=0, parse_dates=True)
     return dataframe
 
@@ -111,7 +111,7 @@ def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
     rsi.fillna(value=1.0, inplace=True)
     return rsi
 
-def test(window):
+def _test(window):
     '''
     This function defines unit tests for the two main functions:
     compute_net_returns() and rsi()
@@ -126,7 +126,7 @@ def test(window):
     from pandas._testing import assert_series_equal
 
     path = os.path.dirname(__file__)
-    filename_rets = os.path.join(path, 'data', 'validation_data', 'rets_SPY.csv')
+    filename_rets = os.path.join(path, 'data', 'validation_data', 'rets_YPS.csv')
     test_rets_validated = pd.read_csv(filename_rets, index_col=0, parse_dates=True)
     test_rets = pd.DataFrame(compute_net_returns(dataframe))
     assert_frame_equal(test_rets_validated, test_rets)
@@ -135,7 +135,7 @@ def test(window):
     if window != 14:
         window = 14
 
-    filename_rsi = os.path.join(path, 'data', 'validation_data', 'rsi_SPY.csv')
+    filename_rsi = os.path.join(path, 'data', 'validation_data', 'rsi_YPS.csv')
     test_rsi_validated = pd.read_csv(filename_rsi, index_col=0, parse_dates=True)
     test_rsi_series = test_rsi_validated.iloc[:, 0]
     test_rsi = compute_rsi(dataframe, window)
@@ -152,7 +152,7 @@ if __name__ == '__main__':
     rsi = compute_rsi(dataframe, window)
 
     # Execute unit tests
-    test(window)
+    _test(window)
 
     # Performance Characterization
     exp_range = ExponentialRange(1, 5, 1/4)
