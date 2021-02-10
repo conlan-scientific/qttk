@@ -12,7 +12,7 @@
 import os
 import numpy as np
 import pandas as pd
-# from progiler import time_this
+# from profiler import time_this
 from typing import Optional
 from qttk.utils.data_utils import check_dataframe_columns
 
@@ -35,9 +35,9 @@ def compute_logr(df: pd.DataFrame) -> pd.Series:
     return log_ret.fillna(0)
 
 
-"""Log returns are useful due to their symmetrical characteristic. 
-    
-    Log returns are not easily interpretable for large price swings 
+"""Log returns are useful due to their symmetrical characteristic.
+
+    Log returns are not easily interpretable for large price swings
     but good for small price swings.
 """
 

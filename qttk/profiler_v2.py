@@ -1,7 +1,7 @@
 from timeit import default_timer
 import pandas as pd
 from contextlib import contextmanager
-from typing import List, Dict, Any, Callable
+from typing import List, Dict, Any, Callable, Optional
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import math
@@ -20,7 +20,7 @@ pd.set_option('display.max_rows', None)
 SHOW = True
 
 __all__ = ["time_this", "report_results", "timed_report", "ExponentialRange"]
-# A module-level store of all the evaluation times of things you ran with the 
+# A module-level store of all the evaluation times of things you ran with the
 # @time_this decorator
 runtime_table: List[Dict[str, Any]] = list()
 
@@ -32,10 +32,10 @@ def clear_runtime_table():
 
 def time_this(length_method: Callable[[Any], int]):
     """
-    A decorator that stores the evaluation time against a user-defined length 
+    A decorator that stores the evaluation time against a user-defined length
     and plots it.
 
-    Usage: 
+    Usage:
         @time_this(lambda x: len(x))
         def some_function(x, y, z):
             # do something ...
@@ -135,7 +135,7 @@ class ExponentialRange(object):
     A range that operates on exponents of 10, inclusive
     """
 
-    def __init__(self, start_exponent: int, end_exponent: int, 
+    def __init__(self, start_exponent: int, end_exponent: int,
         step_size: float=ONE_FOURTH, int_only: bool=True):
 
         self.step_size = step_size
@@ -172,7 +172,7 @@ class ExponentialRange(object):
             value = self.get_element(i)
             if not value in existing_entries:
                 yield value
-            existing_entries.add(value)        
+            existing_entries.add(value)
 
     def np_range(self):
         return np.array([*self.iterator()])
@@ -180,4 +180,3 @@ class ExponentialRange(object):
     @property
     def max(self):
         return self.get_element(self.end)
-
