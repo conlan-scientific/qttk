@@ -1,0 +1,1004 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Quantitative Trading ToolKit [qttk] &mdash; qttk  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qttk.utils package" href="qttk.utils.html" />
+    <link rel="prev" title="qttk" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> qttk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">qttk</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quantitative Trading ToolKit [qttk]</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="qttk.utils.html">qttk.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#indicators">Indicators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.bollinger">qttk.bollinger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.cma">qttk.cma module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qttk-cumulative-sum-module">qttk.cumulative_sum module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.ema">qttk.ema module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.ema2">qttk.ema2 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qttk-lin-reg-module">qttk.lin_reg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.ma">qttk.ma module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.macd">qttk.macd module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.pl_return">qttk.pl_return module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.portfolio">qttk.portfolio module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.profiler">qttk.profiler module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.profiler_v2">qttk.profiler_v2 module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.rsi">qttk.rsi module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.sharpe">qttk.sharpe module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk.wma">qttk.wma module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-qttk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">qttk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">qttk</a> &raquo;</li>
+        
+      <li>Quantitative Trading ToolKit [qttk]</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/qttk.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quantitative-trading-toolkit-qttk">
+<h1>Quantitative Trading ToolKit [qttk]<a class="headerlink" href="#quantitative-trading-toolkit-qttk" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="qttk.utils.html">qttk.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qttk.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qttk.utils.html#module-qttk.utils.data_utils">qttk.utils.data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qttk.utils.html#module-qttk.utils.data_validation">qttk.utils.data_validation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qttk.utils.html#module-qttk.utils.qttk_plot">qttk.utils.qttk_plot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qttk.utils.html#module-qttk.utils.sample_data">qttk.utils.sample_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qttk.utils.html#module-qttk.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indicators">
+<h2>Indicators<a class="headerlink" href="#indicators" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-qttk.bollinger">
+<span id="qttk-bollinger-module"></span><h2>qttk.bollinger module<a class="headerlink" href="#module-qttk.bollinger" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>A Bollinger Band® is a technical analysis tool defined by a set of trendlines plotted two standard deviations</dt><dd><p>positively and negatively) away from a simple moving average (SMA) of a security’s price, but which
+can be adjusted to user preferences.</p>
+</dd>
+<dt>This Module outputs a stacked graph featuring:</dt><dd><p>Bollinger Bands with candlestick close prices
+Volume
+%b
+Bandwidth</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt id="qttk.bollinger.compute_bb">
+<code class="sig-prename descclassname">qttk.bollinger.</code><code class="sig-name descname">compute_bb</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">eod_data</span></em>, <em class="sig-param"><span class="n">moving_avg_window</span><span class="o">=</span><span class="default_value">21</span></em>, <em class="sig-param"><span class="n">std_window</span><span class="o">=</span><span class="default_value">21</span></em>, <em class="sig-param"><span class="n">volume_window</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">multiplier</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.bollinger.compute_bb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assumes close feature is adjusted close.
+Prepares dataframe by adding features:</p>
+<blockquote>
+<div><p>Moving Average(min_periods)
+Standard deviation(min_periods)
+Upper Bollinger Band
+Lower Bollinger Band</p>
+<p>Completed compute_bb in 6.263 milliseconds</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Args:</dt><dd><p>eod_data (pd.DataFrame): Open, High, Low, Close Volume dataframe
+moving_avg_window (int, optional): [description]. Defaults to 21.
+std_window (int, optional): [description]. Defaults to 21.
+volume_window (int, optional): [description]. Defaults to 50.
+multiplier (int, optional): [description]. Defaults to 2.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: Columns added, MA_Close, std, BOLU, BOLD, MA_Volume, Bandwidth</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.bollinger.demo_bollinger">
+<code class="sig-prename descclassname">qttk.bollinger.</code><code class="sig-name descname">demo_bollinger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_file_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">save_figure</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">required_columns</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.bollinger.demo_bollinger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry ponit for graph generating tool</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data_file_path (Optional[str], optional): [description]. Defaults to None.
+save_figure (bool, optional): [description]. Defaults to True.
+required_columns (Optional[pd.Series], optional): [description]. Defaults to None.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.bollinger.graph_bb">
+<code class="sig-prename descclassname">qttk.bollinger.</code><code class="sig-name descname">graph_bb</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_frame</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.bollinger.graph_bb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relies on global import matplotlib.pyplot as plt</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.cma">
+<span id="qttk-cma-module"></span><h2>qttk.cma module<a class="headerlink" href="#module-qttk.cma" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p>cumulative_moving_average.py - Three Cumulative Moving Average Functions</p>
+<p>The Cumulative moving average (MA) is a technical indicator
+that represents the unweighted mean of the previous values up to current time.</p>
+<p>from: Investopedia.com
+<a class="reference external" href="https://www.investopedia.com/terms/m/movingaverage.asp">https://www.investopedia.com/terms/m/movingaverage.asp</a></p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/cumulative_moving_average.py</p>
+</dd>
+</dl>
+<p>Profiled and tested moving average functions</p>
+<dl class="simple">
+<dt>Updates 1/31/2021:</dt><dd><ul class="simple">
+<li><p>Using validation test utility</p></li>
+<li><p>Validation data updates discussed in detail in data_validation.py</p></li>
+<li><p>Profiler_v2 is being called as a function</p></li>
+<li><p>Adjusted cumulative_moving_avg_v1 to respect date index</p></li>
+<li><p>Fixed misshaped series bug in cumulative_moving_avg_v2</p></li>
+<li><dl class="simple">
+<dt>Skipped bug with cumulative_moving_avg_v1 that happens</dt><dd><p>when window is larger than values</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt id="qttk.cma.cumulative_moving_avg_v1">
+<code class="sig-prename descclassname">qttk.cma.</code><code class="sig-name descname">cumulative_moving_avg_v1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.cma.cumulative_moving_avg_v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slow cumulative moving average.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.cma.cumulative_moving_avg_v2">
+<code class="sig-prename descclassname">qttk.cma.</code><code class="sig-name descname">cumulative_moving_avg_v2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.cma.cumulative_moving_avg_v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pandas simple moving average pd.Series.expand.mean()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.cma.cumulative_moving_avg_v3">
+<code class="sig-prename descclassname">qttk.cma.</code><code class="sig-name descname">cumulative_moving_avg_v3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.cma.cumulative_moving_avg_v3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cumulative Moving Average</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="qttk-cumulative-sum-module">
+<h2>qttk.cumulative_sum module<a class="headerlink" href="#qttk-cumulative-sum-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-qttk.ema">
+<span id="qttk-ema-module"></span><h2>qttk.ema module<a class="headerlink" href="#module-qttk.ema" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p>testema.py - Exponential Moving Average Functions</p>
+<p>The exponential moving average (EMA) is a technical indicator
+that tracks the price of an investment (like a stock or commodity)
+over time. The EMA is a type of weighted moving average (WMA) that gives
+more weighting or importance to more recent price data.</p>
+<p>from: Investopedia.com
+<a class="reference external" href="http://bit.ly/3sRRxBx">http://bit.ly/3sRRxBx</a></p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/testema.py</p>
+</dd>
+</dl>
+<p>Profiled and tested exponential moving average functions</p>
+<p>for a list 10**4 long:
+exponential_moving_average_v1: 0.650 milliseconds
+exponential_moving_average_v2: 0.623 milliseconds
+exponential_moving_average_v3: 0.339 milliseconds</p>
+<dl class="py function">
+<dt id="qttk.ema.exponential_moving_average_v1">
+<code class="sig-prename descclassname">qttk.ema.</code><code class="sig-name descname">exponential_moving_average_v1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">com</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">span</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">halflife</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">min_periods</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">adjust</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">ignore_na</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">times</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema.exponential_moving_average_v1" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Accepts a series of values and returns an exponentially</dt><dd><p>weighted moving average series</p>
+</dd>
+</dl>
+<p>pandas.DataFrame.ewm() function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.ema.exponential_moving_average_v2">
+<code class="sig-prename descclassname">qttk.ema.</code><code class="sig-name descname">exponential_moving_average_v2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">min_periods</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema.exponential_moving_average_v2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Uses numpy’s convolve method to slightly outperform native pandas.DataFrame.ewm</dt><dd><p>at the cost of some features.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.ema.exponential_moving_average_v3">
+<code class="sig-prename descclassname">qttk.ema.</code><code class="sig-name descname">exponential_moving_average_v3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">min_periods</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema.exponential_moving_average_v3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scipy alternative</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.ema.python_simple_ema">
+<code class="sig-prename descclassname">qttk.ema.</code><code class="sig-name descname">python_simple_ema</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">window</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema.python_simple_ema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python simple Exponential Moving Average</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.ema.simple_ema">
+<code class="sig-prename descclassname">qttk.ema.</code><code class="sig-name descname">simple_ema</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">window</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema.simple_ema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple Exponential Moving Average
+alpha is usually between .1 and .3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.ema2">
+<span id="qttk-ema2-module"></span><h2>qttk.ema2 module<a class="headerlink" href="#module-qttk.ema2" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="qttk.ema2.python_simple_ema">
+<code class="sig-prename descclassname">qttk.ema2.</code><code class="sig-name descname">python_simple_ema</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">window</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema2.python_simple_ema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python simple Exponential Moving Average</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.ema2.simple_ema">
+<code class="sig-prename descclassname">qttk.ema2.</code><code class="sig-name descname">simple_ema</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">window</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ema2.simple_ema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple Exponential Moving Average
+alpha is usually between .1 and .3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="qttk-lin-reg-module">
+<h2>qttk.lin_reg module<a class="headerlink" href="#qttk-lin-reg-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-qttk.ma">
+<span id="qttk-ma-module"></span><h2>qttk.ma module<a class="headerlink" href="#module-qttk.ma" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p># moving_average.py - Moving Average Study
+# performance evaluation of different moving average algorithms</p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/mvgAvg.py</p>
+</dd>
+<dt># 1/31/2021 changes:</dt><dd><ul class="simple">
+<li><p>renamed functions</p></li>
+<li><p>Removed while loop from moving_avg_v1</p></li>
+<li><p>Removed try/except from moving_avg_v1</p></li>
+<li><p>Simplified moving_avg_v1 by removing duplicate position var j</p></li>
+<li><p>Added functions from testma.py</p></li>
+<li><p>Updated to use validation testing utility</p></li>
+<li><p>Added date index to validation data</p></li>
+<li><p>Corrected offset in moving_avg_v3, sadly v3 is slower now</p></li>
+<li><dl class="simple">
+<dt>Created new validation files:</dt><dd><p>ma_input_data, ma_target_data with fewer samples</p>
+</dd>
+</dl>
+</li>
+<li><p>Removed decorators and call profilerv2.time_this as a function</p></li>
+<li><dl class="simple">
+<dt>Conformed to code quality guideline: </dt><dd><p>Don’t return unnecessarily complex objects.</p>
+</dd>
+</dl>
+</li>
+<li><p>Adjusted moving_avg_v1 and v2 to respect date indexes</p></li>
+<li><p>Changed min_periods parameter name to window to be consistent</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt id="qttk.ma.moving_avg_v4">
+<code class="sig-prename descclassname">qttk.ma.</code><code class="sig-name descname">moving_avg_v4</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">20</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.ma.moving_avg_v4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pandas moving average with .rolling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.macd">
+<span id="qttk-macd-module"></span><h2>qttk.macd module<a class="headerlink" href="#module-qttk.macd" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Moving average convergence divergence (MACD) is a trend-following momentum</dt><dd><p>indicator that shows the relationship between two moving averages of a security’s
+price. The MACD is calculated by subtracting the 26-period exponential moving
+average (EMA) from the 12-period EMA.</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt id="qttk.macd.compute_macd">
+<code class="sig-prename descclassname">qttk.macd.</code><code class="sig-name descname">compute_macd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">eod_data</span></em>, <em class="sig-param"><span class="n">sm_window</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">lg_window</span><span class="o">=</span><span class="default_value">26</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.macd.compute_macd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assumes close feature is adjusted close.
+Prepares dataframe by adding features:</p>
+<blockquote>
+<div><p>Small Exponential Moving Average(sm_exp)
+Large Exponential Moving Average(lg_exp)
+MACD</p>
+<p>Completed compute_macd in 3.303 milliseconds</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Args:</dt><dd><p>eod_data (pd.DataFrame): Open, High, Low, Close Volume dataframe</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: Columns added, MACD, MACD_MA
+:param sm_window:
+:param eod_data:
+:param lg_window:</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.macd.demo_macd">
+<code class="sig-prename descclassname">qttk.macd.</code><code class="sig-name descname">demo_macd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_file_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">save_figure</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">required_columns</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.macd.demo_macd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry ponit for graph generating tool</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data_file_path (Optional[str], optional): [description]. Defaults to None.
+save_figure (bool, optional): [description]. Defaults to True.
+required_columns (Optional[pd.Series], optional): [description]. Defaults to None.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.macd.graph_macd">
+<code class="sig-prename descclassname">qttk.macd.</code><code class="sig-name descname">graph_macd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_frame</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.macd.graph_macd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relies on global import matplotlib.pyplot as plt</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.pl_return">
+<span id="qttk-pl-return-module"></span><h2>qttk.pl_return module<a class="headerlink" href="#module-qttk.pl_return" title="Permalink to this headline">¶</a></h2>
+<p>The simple return of a portfolio is the weighted sum
+of the simple returns of the constituents of the portfolio.</p>
+<p>The log return for a time period is the sum of the log returns
+of partitions of the time period.</p>
+<dl class="simple">
+<dt>This module outputs a series along with a graph:</dt><dd><p>Series can be either percent return or log return
+Graph will output either percent or log return</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt id="qttk.pl_return.compute_logr">
+<code class="sig-prename descclassname">qttk.pl_return.</code><code class="sig-name descname">compute_logr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.pl_return.compute_logr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completed compute_log in 2.028 milliseconds</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>df: Close from DataFrame</p>
+</dd>
+<dt>Returns:</dt><dd><p>log return pd.Series</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.pl_return.compute_perr">
+<code class="sig-prename descclassname">qttk.pl_return.</code><code class="sig-name descname">compute_perr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.pl_return.compute_perr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completed compute_perr in 0.448 milliseconds</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>df: Close from DataFrame</p>
+</dd>
+<dt>Returns:</dt><dd><p>percent return pd.Series</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.pl_return.demo_logr">
+<code class="sig-prename descclassname">qttk.pl_return.</code><code class="sig-name descname">demo_logr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_file_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">required_columns</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.pl_return.demo_logr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry ponit for graph generating tool
+Args:</p>
+<blockquote>
+<div><p>data_file_path (Optional[str], optional): [description]. Defaults to None.
+required_columns (Optional[pd.Series], optional): [description]. Defaults to None.
+:param data_file_path:
+:param required_columns:
+:param data:</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.pl_return.graph_returns">
+<code class="sig-prename descclassname">qttk.pl_return.</code><code class="sig-name descname">graph_returns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">series</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.pl_return.graph_returns" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.portfolio">
+<span id="qttk-portfolio-module"></span><h2>qttk.portfolio module<a class="headerlink" href="#module-qttk.portfolio" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p># portfolio.py - Portfolio Summary</p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/portfolio.py</p>
+</dd>
+</dl>
+<p># production version: 2021-02-04</p>
+<dl class="py function">
+<dt id="qttk.portfolio.portfolio_price_series">
+<code class="sig-prename descclassname">qttk.portfolio.</code><code class="sig-name descname">portfolio_price_series</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">wt</span></em>, <em class="sig-param"><span class="n">df</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.portfolio.portfolio_price_series" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.profiler">
+<span id="qttk-profiler-module"></span><h2>qttk.profiler module<a class="headerlink" href="#module-qttk.profiler" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="qttk.profiler.time_this">
+<code class="sig-prename descclassname">qttk.profiler.</code><code class="sig-name descname">time_this</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler.time_this" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-qttk.profiler_v2">
+<span id="qttk-profiler-v2-module"></span><h2>qttk.profiler_v2 module<a class="headerlink" href="#module-qttk.profiler_v2" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="qttk.profiler_v2.ExponentialRange">
+<em class="property">class </em><code class="sig-prename descclassname">qttk.profiler_v2.</code><code class="sig-name descname">ExponentialRange</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start_exponent</span></em>, <em class="sig-param"><span class="n">end_exponent</span></em>, <em class="sig-param"><span class="n">step_size</span><span class="o">=</span><span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">int_only</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.ExponentialRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A range that operates on exponents of 10, inclusive</p>
+<dl class="py method">
+<dt id="qttk.profiler_v2.ExponentialRange.exp_to_int">
+<code class="sig-name descname">exp_to_int</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">end_exponent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.ExponentialRange.exp_to_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="qttk.profiler_v2.ExponentialRange.get_element">
+<code class="sig-name descname">get_element</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.ExponentialRange.get_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the i-th element of the iteration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="qttk.profiler_v2.ExponentialRange.iterator">
+<code class="sig-name descname">iterator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">alt_end</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.ExponentialRange.iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield unique values of get_element for i in start through end</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="qttk.profiler_v2.ExponentialRange.max">
+<em class="property">property </em><code class="sig-name descname">max</code><a class="headerlink" href="#qttk.profiler_v2.ExponentialRange.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="qttk.profiler_v2.ExponentialRange.np_range">
+<code class="sig-name descname">np_range</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.ExponentialRange.np_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.profiler_v2.report_results">
+<code class="sig-prename descclassname">qttk.profiler_v2.</code><code class="sig-name descname">report_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.report_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot and print some information about the efficiency of the algorithms you
+just ran</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.profiler_v2.time_this">
+<code class="sig-prename descclassname">qttk.profiler_v2.</code><code class="sig-name descname">time_this</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">length_method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.time_this" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator that stores the evaluation time against a user-defined length
+and plots it.</p>
+<dl>
+<dt>Usage:</dt><dd><p>&#64;time_this(lambda x: len(x))
+def some_function(x, y, z):</p>
+<blockquote>
+<div><p># do something …</p>
+</div></blockquote>
+<p># or …
+&#64;time_this(lambda <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: len(args[0]))
+def some_function(x, y, z):</p>
+<blockquote>
+<div><p># do something …</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.profiler_v2.timed_report">
+<code class="sig-prename descclassname">qttk.profiler_v2.</code><code class="sig-name descname">timed_report</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qttk.profiler_v2.timed_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>e a s e   o f   u s e</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.rsi">
+<span id="qttk-rsi-module"></span><h2>qttk.rsi module<a class="headerlink" href="#module-qttk.rsi" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p># rsi.py - Relative Strength Index</p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/rsi.py</p>
+</dd>
+</dl>
+<p># production version: 2021-01-27</p>
+<dl class="py function">
+<dt id="qttk.rsi.compute_net_returns">
+<code class="sig-prename descclassname">qttk.rsi.</code><code class="sig-name descname">compute_net_returns</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.rsi.compute_net_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Net return(t) = Price(t)/Price(t-1) - 1
+from: page 13, Machine Trading by Chan, E.P.</p>
+<p>returns an instrument’s net return</p>
+<p>dataframe is a dataframe that needs to be in the following format:
+index        0    1     2   3    4
+YYYY-MM-DD   open close low high volume</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.rsi.compute_rsi">
+<code class="sig-prename descclassname">qttk.rsi.</code><code class="sig-name descname">compute_rsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataframe</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">14</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.rsi.compute_rsi" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>rsi: Relative Strength Index</dt><dd><p>rsi = 100 - (100/(1+RS))
+RS = (avg of x days’ up closes)/(avg of x days’ down closes)</p>
+<p>avg of x days’ up closes = total points gained on up days/weeks divide by x days/weeks
+avg of x days’ down closes = total points lost on down days/weeks divide by x days/weeks</p>
+<p>from: page 239 Technical Analysis of the Financial Markets, 1st ed. by Murphy, John J.</p>
+<p>rets are the net returns. use function compute_net_returns() to calculate.</p>
+<p>window is x days for the moving average calculation</p>
+</dd>
+</dl>
+<p>returns a series of rsi values</p>
+<p>Completed rsi in 4.283 milliseconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.sharpe">
+<span id="qttk-sharpe-module"></span><h2>qttk.sharpe module<a class="headerlink" href="#module-qttk.sharpe" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p># Listings from:
+# <a class="reference external" href="https://github.com/chrisconlan/algorithmic-trading-with-python/tree/master/listings/chapter_2">https://github.com/chrisconlan/algorithmic-trading-with-python/tree/master/listings/chapter_2</a></p>
+<p># sharpe.py - Sharpe Ratio</p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/sharpe.py</p>
+</dd>
+</dl>
+<p># production version: 2021-02-04</p>
+<dl class="py function">
+<dt id="qttk.sharpe.calculate_annualized_volatility">
+<code class="sig-prename descclassname">qttk.sharpe.</code><code class="sig-name descname">calculate_annualized_volatility</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">return_series</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.sharpe.calculate_annualized_volatility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates annualized volatility for a date-indexed return series.
+Works for any interval of date-indexed prices and returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.sharpe.calculate_cagr">
+<code class="sig-prename descclassname">qttk.sharpe.</code><code class="sig-name descname">calculate_cagr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">series</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.sharpe.calculate_cagr" title="Permalink to this definition">¶</a></dt>
+<dd><p>CAGR = Price(T)/Price(0)**(1/k) - 1
+k = 1/T, T = years spanned in series
+from: page 26, Algorithmic Trading with Python by C. Conlan</p>
+<p>returns the Compounded Annual Growth Rate (CAGR) of the series</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.sharpe.calculate_return_series">
+<code class="sig-prename descclassname">qttk.sharpe.</code><code class="sig-name descname">calculate_return_series</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">series</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.sharpe.calculate_return_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the return series of a time series.
+The first value will always be NaN.
+Output series retains the index of the input series.
+ticker: /data/eod/IRX.csv
+baseline time: 3.506 milliseconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.sharpe.calculate_sharpe_ratio">
+<code class="sig-prename descclassname">qttk.sharpe.</code><code class="sig-name descname">calculate_sharpe_ratio</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">price_series</span></em>, <em class="sig-param"><span class="n">benchmark_rate</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.sharpe.calculate_sharpe_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the sharpe ratio given a price series. Defaults to benchmark_rate
+of zero.
+ticker: /data/eod/IRX.csv
+baseline time: 5.5 milliseconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.sharpe.get_years_past">
+<code class="sig-prename descclassname">qttk.sharpe.</code><code class="sig-name descname">get_years_past</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">series</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.sharpe.get_years_past" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the years past according to the index of the series for use with
+functions that require annualization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.sharpe.load_ticker">
+<code class="sig-prename descclassname">qttk.sharpe.</code><code class="sig-name descname">load_ticker</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ticker</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.sharpe.load_ticker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads EOD data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk.wma">
+<span id="qttk-wma-module"></span><h2>qttk.wma module<a class="headerlink" href="#module-qttk.wma" title="Permalink to this headline">¶</a></h2>
+<p># Quantitative Trading ToolKit (qttk)
+# <a class="reference external" href="https://github.com/conlan-scientific/qttk">https://github.com/conlan-scientific/qttk</a></p>
+<p>testwma.py - Weighted Moving Average Functions</p>
+<p>Weighted moving averages assign a heavier weighting to more current
+data points since they are more relevant than dat points in the distant
+past.  The sum of the weighting should add up to 1 (or 100 percent).</p>
+<p>from: Investopedia.com
+<a class="reference external" href="http://bit.ly/364HCPk">http://bit.ly/364HCPk</a></p>
+<dl class="simple">
+<dt># run from project root directory:</dt><dd><p>C:/Users/user/qttk&gt;ipython -i ./qttk/weighted_moving_average.py</p>
+</dd>
+</dl>
+<p>Profiled and tested weighted moving average functions</p>
+<p>1/31/2021 updates:
+* replaced min_periods parameter name with window for consistency
+* Converted to profiler_v2
+* Implemented function call of profiler_v2
+* Added validation testing</p>
+<dl class="py function">
+<dt id="qttk.wma.weighted_moving_avg_v1">
+<code class="sig-prename descclassname">qttk.wma.</code><code class="sig-name descname">weighted_moving_avg_v1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.wma.weighted_moving_avg_v1" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Description:</dt><dd><p>Backwards looking weighted moving average.</p>
+</dd>
+<dt>Complexity:</dt><dd><p>O(nm) because n values * window sized window</p>
+</dd>
+</dl>
+<p>Memory Usage:</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><p>values: pd.Series of closing prices
+m     : period to be calculated</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.wma.weighted_moving_avg_v2">
+<code class="sig-prename descclassname">qttk.wma.</code><code class="sig-name descname">weighted_moving_avg_v2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.wma.weighted_moving_avg_v2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Description:</dt><dd><p>Backwards looking weighted moving average.</p>
+</dd>
+<dt>Complexity:</dt><dd><p>O(n)?  This is the slowest method, hidden complexity?</p>
+</dd>
+</dl>
+<p>Memory Usage:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="qttk.wma.weighted_moving_avg_v3">
+<code class="sig-prename descclassname">qttk.wma.</code><code class="sig-name descname">weighted_moving_avg_v3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#qttk.wma.weighted_moving_avg_v3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to use np_weighted_moving_avg function
+.00257 ÷ .000706 = 3.64x slower than talib.WMA with arguments:</p>
+<blockquote>
+<div><p>series = pd.Series(np.random.random((1000 * 100)))
+window = 12</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-qttk">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-qttk" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="qttk.utils.html" class="btn btn-neutral float-right" title="qttk.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="qttk" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Conlan Scientific.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

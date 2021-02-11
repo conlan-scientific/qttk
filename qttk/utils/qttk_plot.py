@@ -1,9 +1,17 @@
 '''
-# General use plot function
-# params:
-# test = True suppresses plot figures
-# plot = True shows figures using Pandas plot
-# ticker_data a dataframe required for generating a plot
+General use plot function
+
+Parameters
+----------
+test : bool, default=True 
+    suppresses plot figures
+    
+plot : bool, default=True
+    shows figures using Pandas plot
+
+ticker_data : pd.DataFrame
+    a dataframe required for generating a plot
+
 '''
 import pandas as pd
 import matplotlib as mpl
