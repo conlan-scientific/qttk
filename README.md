@@ -1,17 +1,16 @@
 # qttk
 [qttk] Quantitative Trading ToolKit - Quant trading library developed by Conlan Scientific Open-Source Research Cohort
 
-## Requirements:
-* python >= 3.7
-* numpy, pandas, matplotlib
-* checkout setup.md for conda environment setup
+## Design Philosophy
 
-## Philosophy
-* Transparent and open source
-* Well documented - function signatures use type hints
-* Performance tested
++ **Consistent** Date-indexed `pandas` objects are the core data structure.
++ **Transparent** Test cases are clear and serve as an additional layer of documentation. Type hints are used liberally.
++ **Performant** Execution speed tests are built into test cases. Only the fatest functions get published.
 
-## Getting Started with QTTK
+
+## Getting Started with `qttk`
+
+Install from PyPI using `pip install qttk`. Try the following sample.
 
 ```python
 # Indicators module contains core qttk functionality
@@ -30,6 +29,7 @@ rsi = compute_rsi(df)
 print(rsi[-10:])
 ```
 
-## Next Steps:
-* Checkout examples/ for cool qttk demos
-* Feel free to create a bug or feature request ticket: [qttk issue tracker](https://github.com/conlan-scientific/qttk/issues) 
+## Next Steps
+
++ Check out [some demos on GitHub](https://github.com/conlan-scientific/qttk/tree/master/qttk/examples).
++ Feel free to create a bug or feature request ticket: [qttk issue tracker](https://github.com/conlan-scientific/qttk/issues).

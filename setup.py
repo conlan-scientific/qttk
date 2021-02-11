@@ -6,10 +6,16 @@ version_filepath = os.path.join(package_dir, 'version.txt')
 with open(version_filepath) as file_ptr:
     version = file_ptr.read().strip()
 
+git_directory = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(git_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(
     name='qttk',
     version=version,    
     description='Quantitative Trading Toolkit',
+    long_description_content_type='text/markdown',
+    long_description=long_description,
     url='https://github.com/conlan-scientific/qttk',
     author='Conlan Scientific Open-source Development Cohort',
     author_email='chris@conlan.io',
@@ -33,11 +39,12 @@ setup(
         'scipy>=1.5.4',             
     ],
     classifiers=[
-        'Intended Audience :: Quant traders',
-        'License :: GNU General Public License v3.0',  
+        'Intended Audience :: Developers',
+        'Intended Audience :: Financial and Insurance Industry',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',  
         'Operating System :: POSIX :: Linux',
         'Operating System :: Microsoft :: Windows',
-        'Operating System :: MaxOS :: MaxOS X',
+        'Operating System :: MacOS :: MacOS X',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
