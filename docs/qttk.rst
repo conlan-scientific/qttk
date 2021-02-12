@@ -1,15 +1,15 @@
-Quantitative Trading ToolKit [qttk]
+qttk package
 ============
 
-Utilities
+Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
    qttk.utils
 
-Indicators
+Submodules
 ----------
 
 qttk.bollinger module
@@ -44,10 +44,10 @@ qttk.ema module
    :undoc-members:
    :show-inheritance:
 
-qttk.ema2 module
-----------------
+qttk.indicators module
+----------------------
 
-.. automodule:: qttk.ema2
+.. automodule:: qttk.indicators
    :members:
    :undoc-members:
    :show-inheritance:
