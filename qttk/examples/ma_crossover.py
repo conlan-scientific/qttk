@@ -50,10 +50,10 @@ def _plot(ticker:str, ticker_data: pd.DataFrame) -> None:
 
 
 if __name__ == '__main__':
-    ticker = 'DLVY'
+    ticker = 'AWU'
     dataframe = load_sample_data(ticker)
 
-    ma_short = compute_ma(dataframe['close'], 10)
+    ma_short = compute_ma(dataframe['close'], 5)
     ma_long = compute_ma(dataframe['close'], 25)
 
     dataframe['ma_short'] = ma_short

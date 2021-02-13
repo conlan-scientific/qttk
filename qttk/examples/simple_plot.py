@@ -7,7 +7,7 @@
 from qttk.utils.qttk_plot import plot
 from qttk.utils.sample_data import load_sample_data
 
-ticker = 'EUZ'
+ticker = 'TRE'
 dataframe = load_sample_data(ticker)
 
 print('Simple Plot demo- test=True, don\'t show plot')

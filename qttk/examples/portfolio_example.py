@@ -7,7 +7,7 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./qttk/examples/portfolio_example.py
 
-# production version: 2021-02-05
+# production version: 2021-02-12
 '''
 from qttk.indicators import calculate_sharpe_ratio, portfolio_price_series
 from qttk.indicators import compute_rsi, compute_bb
@@ -58,7 +58,8 @@ def _plot(ticker: str, dataframe: pd.DataFrame) -> None:
 
 if __name__ == '__main__':
     # define portfolio- stocks and weights
-    stocks = ['AWU', 'AXC', 'BGN', 'BMG', 'DVRL', 'EHH', 'EUZ', 'EXY', 'FJKV', 'KUAQ']
+    stocks = ['AWU', 'HECP', 'HRVC', 'HXX', 'NSLG', 'PQCE', 'RZW', 'TRE', 'WFS',\
+     'YPS', 'ZGL']
     # an equally weighted portfolio is assumed
     # weights must add up to 1.0 (100%)
     weights = np.full((1,len(stocks)), 1/len(stocks))
