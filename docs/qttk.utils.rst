@@ -1,9 +1,6 @@
 qttk.utils package
 ==================
 
-Submodules
-----------
-
 qttk.utils.data\_utils module
 -----------------------------
 
@@ -35,9 +32,6 @@ qttk.utils.sample\_data module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
 
 .. automodule:: qttk.utils
    :members:

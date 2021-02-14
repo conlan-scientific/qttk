@@ -1,16 +1,24 @@
-qttk package
-============
+Indicators
+==========
 
-Subpackages
------------
+qttk.indicators module
+----------------------
+
+.. automodule:: qttk.indicators
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Utils
+=====
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    qttk.utils
 
 Submodules
-----------
+==========
 
 qttk.bollinger module
 ---------------------
@@ -40,14 +48,6 @@ qttk.ema module
 ---------------
 
 .. automodule:: qttk.ema
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-qttk.indicators module
-----------------------
-
-.. automodule:: qttk.indicators
    :members:
    :undoc-members:
    :show-inheritance:

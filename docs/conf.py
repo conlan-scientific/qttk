@@ -18,9 +18,9 @@ sys.path.insert(0, os.path.abspath('../qttk'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'qttk'
+project = '[qttk] Quantitative Trading ToolKit'
 copyright = '2021, Conlan Scientific'
-author = 'Conlan Scientific'
+author = 'Conlan Scientific Open-source Development Cohort'
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,7 +31,8 @@ author = 'Conlan Scientific'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx_autodoc_typehints',
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme',
+    'sphinx.ext.autosummary'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,4 +54,4 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = []
