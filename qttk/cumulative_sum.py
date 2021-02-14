@@ -3,10 +3,9 @@ Given a list of numbers, compute their cumulative sum
 Output the cumulative sum to a new sequence
 
 Source:
-  Fast Python - Master the Basics to Write Faster Code
+    Fast Python - Master the Basics to Write Faster Code
 
-As seen on the log-log plot, the functions have the same complexity
-  but there are differences in performance 
+As seen on the log-log plot, the functions have the same complexity but there are differences in performance.
 """
 import gc
 import pandas as pd
@@ -45,17 +44,15 @@ def series_accumulator_cumsum_idx(values: pd.Series) -> pd.Series:
 
 def pandas_fast_cumsum(values: pd.Series) -> pd.Series:
     '''
-    this s O(n) and optimized with C code
-    Uses memory optimized array under the hood and pandas
-      has additional functionality that impacts performance
+    This s O(n) and optimized with C code.  Uses memory optimized array under the hood and pandas has additional functionality that impacts performance
     '''
     return values.cumsum()
 
 
 def numpy_fast_cumsum(values: np.ndarray) -> np.ndarray:
     '''
-    This is O(n) and optimized with C code
-    uses memory optimized array
+    This is O(n) and optimized with C code.
+    numpy_fast_cumsum is using a memory optimized array.
     '''
     return values.cumsum()
 
@@ -64,7 +61,7 @@ def pure_python_cumsum(values: List[float]) -> List[float]:
     '''
     This is O(n) time because it does addition for n values
     Python lists use a heap instead of a memory optimized array.
-      Heaps have less overhead
+    Heaps have less overhead
     '''
     cumsum = []
     accumulator = 0

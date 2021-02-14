@@ -31,14 +31,16 @@ def compute_bb(eod_data: pd.DataFrame,
     """
     Assumes close feature is adjusted close.
     Prepares dataframe by adding features:
-      Moving Average(min_periods)
-      Standard deviation(min_periods)
-      Upper Bollinger Band
-      Lower Bollinger Band
 
-      Completed compute_bb in 6.263 milliseconds
+    * Moving Average(min_periods)
+    * Standard deviation(min_periods)
+    * Upper Bollinger Band
+    * Lower Bollinger Band
+    
+    Completed compute_bb in 6.263 milliseconds
 
     Args:
+
         eod_data (pd.DataFrame): Open, High, Low, Close Volume dataframe
         moving_avg_window (int, optional): [description]. Defaults to 21.
         std_window (int, optional): [description]. Defaults to 21.

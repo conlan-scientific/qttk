@@ -50,31 +50,33 @@ ema_validation_data = os.path.join(base_path,
 
 
                             
-def load_cma_validation_data():
-    '''
+def load_cma_validation_data() -> (pd.Series, pd.Series):
+    """
     To create validation dataset:
+    ::
 
-    >>> cma_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
-    >>> cma_val_df.index = pd.date_range(start='12-1-2010', periods=cma_val_df.shape[0])
-    >>> cma_val_df.index.name = 'date_idx'
-    >>> cma_val_df['target'] = cma_val_df['data'].expanding(20).mean()
-    >>> cma_val_df.to_csv('data/validation_data/cma_validation_data.csv')
+        cma_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
+        cma_val_df.index = pd.date_range(start='12-1-2010', periods=cma_val_df.shape[0])
+        cma_val_df.index.name = 'date_idx'
+        cma_val_df['target'] = cma_val_df['data'].expanding(20).mean()
+        cma_val_df.to_csv('data/validation_data/cma_validation_data.csv')
 
-    '''
+    """
     cma_df = pd.read_csv(cma_validation_data, index_col='date_idx')
     return (cma_df['data'],
             cma_df['target'])
 
 
-def load_sma_validation_data():
+def load_sma_validation_data() -> (pd.Series, pd.Series):
     '''
     To create validation dataset:
+    ::
 
-    >>> sma_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
-    >>> sma_val_df.index = pd.date_range(start='12-1-2010', periods=sma_val_df.shape[0])
-    >>> sma_val_df.index.name = 'date_idx'
-    >>> sma_val_df['target'] = sma_val_df['data'].rolling(20).mean()
-    >>> sma_val_df.to_csv('data/validation_data/sma_validation_data.csv')
+        sma_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
+        sma_val_df.index = pd.date_range(start='12-1-2010', periods=sma_val_df.shape[0])
+        sma_val_df.index.name = 'date_idx'
+        sma_val_df['target'] = sma_val_df['data'].rolling(20).mean()
+        sma_val_df.to_csv('data/validation_data/sma_validation_data.csv')
 
     '''
     sma_df = pd.read_csv(sma_validation_data, index_col='date_idx')
@@ -82,16 +84,17 @@ def load_sma_validation_data():
             sma_df['target'])
 
 
-def load_wma_validation_data():
+def load_wma_validation_data() -> (pd.Series, pd.Series):
     '''
     To create validation dataset:
+    ::
 
-    >>> wma_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
-    >>> wma_val_df.index = pd.date_range(start='12-1-2010', periods=wma_val_df.shape[0])
-    >>> wma_val_df.index.name = 'date_idx'
-    >>> wma_val_df['target'] = talib.WMA(wma_val_df['data'],timeperiod=20)
-    >>> wma_val_df.to_csv('wma_validation_data.csv')
-    >>> wma_val_df.to_csv('data/validation_data/wma_validation_data.csv')
+        wma_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
+        wma_val_df.index = pd.date_range(start='12-1-2010', periods=wma_val_df.shape[0])
+        wma_val_df.index.name = 'date_idx'
+        wma_val_df['target'] = talib.WMA(wma_val_df['data'],timeperiod=20)
+        wma_val_df.to_csv('wma_validation_data.csv')
+        wma_val_df.to_csv('data/validation_data/wma_validation_data.csv')
 
     '''
     wma_df = pd.read_csv(wma_validation_data, index_col='date_idx')
@@ -99,15 +102,16 @@ def load_wma_validation_data():
             wma_df['target'])
 
 
-def load_ema_validation_data():
+def load_ema_validation_data() -> (pd.Series, pd.Series):
     '''
     To create validation dataset:
+    ::
 
-    >>> ema_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
-    >>> ema_val_df.index = pd.date_range(start='12-1-2010', periods=ema_val_df.shape[0])
-    >>> ema_val_df.index.name = 'date_idx'
-    >>> ema_val_df['target'] = talib.EMA(ema_val_df['data'],timeperiod=20)
-    >>> ema_val_df.to_csv('data/validation_dataewma_validation_data.csv')
+        ema_val_df = pd.DataFrame({'data':range(1,501) * np.random.rand(500)})
+        ema_val_df.index = pd.date_range(start='12-1-2010', periods=ema_val_df.shape[0])
+        ema_val_df.index.name = 'date_idx'
+        ema_val_df['target'] = talib.EMA(ema_val_df['data'],timeperiod=20)
+        ema_val_df.to_csv('data/validation_dataewma_validation_data.csv')
 
     '''
     ema_df = pd.read_csv(ema_validation_data, index_col='date_idx')
@@ -115,10 +119,17 @@ def load_ema_validation_data():
             ema_df['target'])
 
 
-def save_validation_data(function_name: str, data: pd.Series):
-    # save validation data
-    #_save_validation_data('simpleMA', x)
-    #_save_validation_data('CMA_output', z)
+def save_validation_data(function_name: str, data: pd.Series) :
+    """
+    [summary]
+        save validation data
+        _save_validation_data('simpleMA', x)
+        _save_validation_data('CMA_output', z)
+    Args:
+        function_name (str): [description]
+        data (pd.Series): [description]
+    """
+    
 
     filename = os.path.join(path, '..', 'data', 'validation_data', \
     'ValidationData-{}.csv'.format(function_name))

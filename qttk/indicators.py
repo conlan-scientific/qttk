@@ -1,11 +1,29 @@
 '''
-Production Ready Indicators Interface
-  rsi
-  bollinger
-  macd
-  ma
-  ema
-  wma
+The Indicators module gathers **Production** Ready Indicators.
+This is the primary entry point for using qttk
+
+.. currentmodule:: indicators
+
+.. autosummary::
+
+   qttk.rsi.compute_net_returns
+   qttk.rsi.compute_rsi
+   qttk.bollinger.compute_bb
+   qttk.bollinger.graph_bb
+   qttk.bollinger.demo_bollinger
+   qttk.macd.compute_macd
+   qttk.macd.graph_macd
+   qttk.ma.moving_avg_v4
+   qttk.cma.cumulative_moving_avg_v2
+   qttk.ema.exponential_moving_average_v2
+   qttk.wma.weighted_moving_avg_v3
+   qttk.sharpe.calculate_return_series
+   qttk.sharpe.calculate_sharpe_ratio
+   qttk.portfolio.portfolio_price_series
+   qttk.pl_return.compute_logr
+   qttk.pl_return.compute_perr
+   qttk.pl_return.graph_returns
+   
 '''
 from qttk.rsi import compute_net_returns, compute_rsi
 from qttk.bollinger import compute_bb, graph_bb, demo_bollinger
