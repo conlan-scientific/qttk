@@ -65,7 +65,7 @@ if __name__ == '__main__':
     weights = np.full((1,len(stocks)), 1/len(stocks))
     #weights = np.array([[0.125, 0.125, 0.0, 0.125, 0.125, 0.125, 0.0, 0.125,\
      #0.125, 0.125, 0.0]])
-    #weights = np.array([[0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0]])
+    #weights = np.array([[0.0, 0.5, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0]])
     #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.34]])
     portfolio = pd.DataFrame(weights, columns=stocks)
     dataframe = load_portfolio(portfolio.columns.values)
@@ -84,5 +84,5 @@ if __name__ == '__main__':
     x = -window                  # define the date range for plot to plot
     to_plot = to_plot.iloc[x:]
     to_plot['rsi'] = rsi[x:]
-    #_plot(ticker, to_plot)
+    _plot(ticker, to_plot)
     exit
