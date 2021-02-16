@@ -31,7 +31,8 @@ if __name__ == '__main__':
     '''
     #weights = np.array([[0.0, 0.0, 0.25, 0.25, 0.25, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0]])
     #weights = np.array([[0.0, 0.25, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.25, 0.25]])
-    weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.34]])
+    weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.33, 0.34]])
+    #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.34]])
     portfolio = pd.DataFrame(weights, columns=stocks)
     dataframe = load_portfolio(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[-252:])
