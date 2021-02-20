@@ -24,7 +24,7 @@ kind : str
     pie
     scatter
     hexbin
-from: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html
+from: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.plot.html
 '''
 import pandas as pd
 import matplotlib as mpl
@@ -33,7 +33,7 @@ mpl.rcParams['grid.color'] = 'k'
 mpl.rcParams['grid.linestyle'] = ':'
 mpl.rcParams['grid.linewidth'] = 0.5
 
-def plot(data_series: pd.Series, test: bool=False, title: str=None,\
+def plot_series(data_series: pd.Series, test: bool=False, title: str=None,\
  kind: str='line', legend: bool=True)->None:
     if test:
         print('testing-- plots not shown')
