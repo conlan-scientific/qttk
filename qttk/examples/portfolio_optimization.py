@@ -25,14 +25,14 @@ if __name__ == '__main__':
      'YPS', 'ZGL']
     # an equally weighted portfolio is assumed
     # weights must add up to 1.0 (100%)
-    #weights = np.full((1,len(stocks)), 1/len(stocks))
+    weights = np.full((1,len(stocks)), 1/len(stocks))
     '''
     Adjusting portfolio weights to demonstrate affects on Sharpe Ratio:
     '''
-    #weights = np.array([[0.0, 0.0, 0.25, 0.25, 0.25, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0]])
     #weights = np.array([[0.0, 0.25, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.25, 0.25]])
-    weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.33, 0.34]])
+    #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.33, 0.34]])
     #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.34]])
+    # weights = np.array([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5]])
     portfolio = pd.DataFrame(weights, columns=stocks)
     dataframe = load_portfolio(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[-252:])
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     print('Sharpe Ratio: ', sharpe)
     print('Average Returns: ', \
-    np.around(returns.iloc[:, [11]].mean(), 5))
+    np.around(returns.iloc[:, [11]].mean()**(1/252), 5))
     print(dataframe.describe().round(2))
 
     exit

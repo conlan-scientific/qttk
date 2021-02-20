@@ -1,5 +1,5 @@
 '''
-General use plot function for pd.DataFrame datatype
+General use plot function for pd.Series datatype
 
 Parameters
 ----------
@@ -9,7 +9,7 @@ test : bool, default=True
 plot : bool, default=True
     shows figures using Pandas plot
 
-ticker_data : pd.DataFrame
+data_series : pd.Series
     a dataframe required for generating a plot
 
 kind : str
@@ -33,11 +33,11 @@ mpl.rcParams['grid.color'] = 'k'
 mpl.rcParams['grid.linestyle'] = ':'
 mpl.rcParams['grid.linewidth'] = 0.5
 
-def plot(ticker_data: pd.DataFrame, test: bool=False, title: str=None,\
+def plot(data_series: pd.Series, test: bool=False, title: str=None,\
  kind: str='line', legend: bool=True)->None:
     if test:
         print('testing-- plots not shown')
         return # no plot
     else:
-        ticker_data.plot(title=title, kind=kind, legend=legend) # show plot
+        data_series.plot(title=title, kind=kind, legend=legend) # show plot
     return
