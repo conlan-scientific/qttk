@@ -61,7 +61,6 @@ if __name__ == '__main__':
     r_squared = r_squared(close_price, predicted_values).round(3)
     print('R squared: ', r_squared)
 
-    '''
     exp_range = ExponentialRange(4, 8, 1/4)
     test_columns = ['date', 'open', 'close', 'low', 'high', 'volume']
     test_df = pd.DataFrame(
@@ -73,6 +72,5 @@ if __name__ == '__main__':
     with timed_report():
         tt = time_this(lambda *args, **kwargs: args[0].shape[0])
         for i in exp_range.iterator():
-            tt(r_squared)(series['close'].iloc[:i], predicted_values['close'].iloc[:i])
-    '''
+            tt(r_squared)(close_price.iloc[:i], predicted_values.iloc[:i])
     exit
