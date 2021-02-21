@@ -8,10 +8,9 @@
   plot(ticker_data: pd.DataFrame, test: bool=False)
 
   example with pd.Series datatype:
-  plot_series(ticker_data: pd.Series, test: bool=False)
+  plot(ticker_data: pd.Series, test: bool=False)
 '''
 from qttk.utils.qttk_plot import plot
-from qttk.utils.qttk_plot_series import plot_series
 from qttk.utils.sample_data import load_sample_data
 
 '''
@@ -23,10 +22,10 @@ dataframe = load_sample_data(ticker)
 print(dataframe.info()) # show dataframe structure
 
 print('Simple Plot demo- test=True, don\'t show plot')
-plot(dataframe.iloc[-30:, 1], title=ticker, test=True)
+plot(dataframe.iloc[-30:, 1], test=True, title=ticker)
 
 print('Simple Plot demo- test=False, show plot:')
-plot(dataframe.iloc[-30:, 1], title=ticker, test=False)
+plot(dataframe.iloc[-30:, 1], test=False, title=ticker)
 
 '''
 # alternative form:
@@ -39,4 +38,4 @@ plot pd.Series
 print('Plot series demo- test=False, show plot:')
 series = dataframe['open']
 print(type(series))
-plot_series(series[-30:], title=ticker, test=False)
+plot(series[-30:], test=False, title=ticker)

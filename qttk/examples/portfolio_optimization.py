@@ -65,6 +65,5 @@ if __name__ == '__main__':
     print('Sharpe Ratio: ', sharpe)
     print('Average Returns: ', \
     np.around(returns.iloc[:, [11]].mean()**(1/252), 5))
-    print(dataframe.describe().round(2))
 
     exit
