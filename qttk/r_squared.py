@@ -72,5 +72,5 @@ if __name__ == '__main__':
     with timed_report():
         tt = time_this(lambda *args, **kwargs: args[0].shape[0])
         for i in exp_range.iterator():
-            tt(r_squared)(test_df.iloc[:i], test_df.iloc[:i])
+            tt(r_squared)(test_df['close'].iloc[:i], test_df['open'].iloc[:i])
     exit
