@@ -2,6 +2,7 @@
 ipython qttk/utils/data_utils.py &&
 ipython qttk/utils/data_validation.py &&
 ipython qttk/utils/sample_data.py &&
+ipython qttk/chaikin_money_flow.py test &&
 ipython qttk/bollinger.py &&
 ipython qttk/cma.py &&
 ipython qttk/cumulative_sum.py &&

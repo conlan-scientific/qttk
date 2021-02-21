@@ -132,6 +132,14 @@ qttk.wma module
    :undoc-members:
    :show-inheritance:
 
+qttk.chaikin_money_flow module
+------------------------------
+
+.. automodule:: qttk.chaikin_money_flow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
