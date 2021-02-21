@@ -23,7 +23,8 @@ This is the primary entry point for using qttk
    qttk.pl_return.compute_logr
    qttk.pl_return.compute_perr
    qttk.pl_return.graph_returns
-   
+   qttk.r_squared.r_squared
+
 '''
 from qttk.rsi import compute_net_returns, compute_rsi
 from qttk.bollinger import compute_bb, graph_bb, demo_bollinger
@@ -35,3 +36,4 @@ from qttk.wma import weighted_moving_avg_v3 as compute_wma
 from qttk.sharpe import calculate_return_series, calculate_sharpe_ratio
 from qttk.portfolio import portfolio_price_series
 from qttk.pl_return import compute_logr, compute_perr, graph_returns
+from qttk.r_squared import r_squared
