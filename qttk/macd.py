@@ -9,6 +9,7 @@ import os
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 
 from typing import Any, Optional, Iterable
@@ -54,7 +55,7 @@ def compute_macd(eod_data: pd.DataFrame,
 
 
 #@time_this
-def graph_macd(data_frame: pd.DataFrame) -> None:
+def graph_macd(data_frame: pd.DataFrame, with_signal: bool = False) -> None:
     """
     Relies on global import matplotlib.pyplot as plt
     """
@@ -98,18 +99,19 @@ def demo_macd(data: str = None, data_file_path: Optional[str] = None,
     """Main entry ponit for graph generating tool
 
     Args:
-        data_file_path (Optional[str], optional): [description]. Defaults to None.
-        save_figure (bool, optional): [description]. Defaults to True.
-        required_columns (Optional[pd.Series], optional): [description]. Defaults to None.
+        data_file_path (Optional[str], optional): When None, uses a random ticker from eod folder.
+        save_figure (bool, optional):  Defaults to True.
+        required_columns (Optional[pd.Series], optional): Defaults to None.
     """
 
     if data_file_path:
         assert os.path.exists(data_file_path), f"{data_file_path} not found"
         csv_file = data_file_path
 
-    else:  # use relative path and example file
+    else:  # use relative path and a ramdom example file
         script_dir = os.path.dirname(__file__)
         csv_files = os.path.join(script_dir, 'data', 'eod')
+        data = np.random.choice(os.listdir(csv_files))
         csv_file = os.path.join(csv_files, data)
 
     df = pd.read_csv(csv_file, index_col=0, parse_dates=True)
@@ -129,16 +131,43 @@ def demo_macd(data: str = None, data_file_path: Optional[str] = None,
         plt.show()
 
 
+def create_macd_signal(macd_series: pd.Series) -> pd.Series:
+    """
+    To be used with a computed macd series.
+    Create a momentum-based signal from the MACD crossover principle.
+    Generate a buy signal when the MACD crosses above zero, and a sell signal when
+    it crosses below zero.
+    """ 
+    macd_sign = np.sign(macd_series)
+
+    # Create copy shifted by one
+    macd_shifted_sign = macd_sign.shift(1)
+
+    # Multiply sign by the boolean.  This will cast the boolean to an integer
+    #   either 1 or 0 and then multiply by the sign either (-1, 0, 1).
+    return macd_sign * (macd_sign != macd_shifted_sign)
+
+
 if __name__ == '__main__':
     required_ohlcv_columns = pd.Series(['open', 'high', 'low', 'close', 'volume'])
     # removed date as a required column because it is set as the dataframe index
     # when the csv is read
     # required_ohlcv_columns = pd.Series(['date', 'open', 'high', 'low', 'close', 'volume'])
     data = 'AWU.csv'  # name of data file to use
-    demo_macd(data, required_columns=required_ohlcv_columns)
+    demo_macd(required_columns=required_ohlcv_columns)
 
     # optional loop
     # script_dir = os.path.dirname(__file__)
     # csv_files = os.path.join(script_dir, 'data', 'eod', '*.csv')
     # for csv_file in glob.glob(csv_files):
     #    main(csv_file)
+
+    # try signal
+    
+    from qttk.utils.sample_data import load_sample_data
+    csv_file = load_sample_data('AWU')
+    macd = compute_macd(csv_file)
+    macd_signal = create_macd_signal(macd['MACD'])
+    macd_signal = macd_signal.iloc[-180:]
+    macd_signal.plot()
+    plt.show()
