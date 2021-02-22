@@ -58,8 +58,8 @@ if __name__ == '__main__':
 
     print('naive prediction--')
     predicted_values = series.iloc[-30:, 1].shift(1)
-    r_squared = r_squared(close_price, predicted_values).round(3)
-    print('R squared: ', r_squared)
+    r2 = r_squared(close_price, predicted_values).round(3)
+    print('R squared: ', r2)
 
     exp_range = ExponentialRange(4, 8, 1/4)
     test_columns = ['date', 'open', 'close', 'low', 'high', 'volume']
@@ -69,8 +69,10 @@ if __name__ == '__main__':
         index=pd.date_range('01-01-1900', periods=exp_range.max, freq=pd.Timedelta(seconds=10))
     )
 
+    test_df['predict_close'] = test_df['close'].shift(1)
+
     with timed_report():
         tt = time_this(lambda *args, **kwargs: args[0].shape[0])
         for i in exp_range.iterator():
-            tt(r_squared)(close_price.iloc[:i], predicted_values.iloc[:i])
+            tt(r_squared)(test_df['close'].iloc[:i], test_df['predict_close'].iloc[:i])
     exit
