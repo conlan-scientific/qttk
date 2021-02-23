@@ -7,63 +7,76 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./qttk/examples/portfolio_optimization.py
 
-# production version: 2021-02-15
+# production version: 2021-02-23
 '''
 from qttk.indicators import calculate_sharpe_ratio, portfolio_price_series
 from qttk.utils.sample_data import load_portfolio
 from qttk.utils.qttk_plot import plot
 
-from datetime import datetime
 import pandas as pd
 import numpy as np
-import os
 
 
 if __name__ == '__main__':
-    # define portfolio- stocks and weights
-    stocks = ['AWU', 'HECP', 'HRVC', 'HXX', 'NSLG', 'PQCE', 'RZW', 'TRE', 'WFS',\
-     'YPS', 'ZGL']
-    # an equally weighted portfolio is assumed
-    # weights must add up to 1.0 (100%)
-    weights = np.full((1,len(stocks)), 1/len(stocks))
     '''
-    Adjusting portfolio weights to demonstrate affects on Sharpe Ratio:
+    an equally weighted portfolio is initially assumed
+    weights must add up to approximately 1.0 (100%)
+    a portfolio with a dictionary of stocks with weights of 0.09
+    is defined below to establish a baseline for comparison:
     '''
-    #weights = np.array([[0.0, 0.25, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.25, 0.25]])
-    #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.33, 0.34]])
-    #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.34]])
-    # weights = np.array([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5]])
-    portfolio = pd.DataFrame(weights, columns=stocks)
-    dataframe = load_portfolio(portfolio.columns.values)
-    series = portfolio_price_series(weights, dataframe.iloc[-252:])
+    stocks = {'AWU': 0.09, 'HECP': 0.09, 'HRVC': 0.09, 'HXX': 0.09, 'NSLG': 0.09, \
+    'PQCE': 0.09, 'RZW': 0.09, 'TRE': 0.09, 'WFS': 0.09, 'YPS': 0.09, 'ZGL': 0.09}
+
+    '''
+    Results-
+    Sharpe Ratio: 0.68
+    Returns:      0.18
+    '''
+
+    '''
+    1 stock portfolio: HECP
+    '''
+    #stocks = {'AWU': 0.0, 'HECP': 1.0, 'HRVC': 0.0, 'HXX': 0.0, 'NSLG': 0.0, \
+    #'PQCE': 0.0, 'RZW': 0.0, 'TRE': 0.0, 'WFS': 0.0, 'YPS': 0.0, 'ZGL': 0.0}
+    '''
+    Results-
+    Sharpe Ratio: 0.61
+    Returns:      0.29
+    '''
+
+    '''
+    Stocks selected based upon returns and volatility:
+    2 stock portfolio: NSLG, PQCE
+    '''
+    #stocks = {'AWU': 0.0, 'HECP': 0.0, 'HRVC': 0.0, 'HXX': 0.0, 'NSLG': 0.5, \
+    #'PQCE': 0.5, 'RZW': 0.0, 'TRE': 0.0, 'WFS': 0.0, 'YPS': 0.0, 'ZGL': 0.0}
+    '''
+    Results-
+    Sharpe Ratio: 0.70
+    Returns:      0.25
+    '''
+
+    dataframe = load_portfolio(stocks.keys())
+    series = portfolio_price_series(stocks.values(), dataframe)
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
 
-    dataframe['portfolio'] = series
-    returns = np.log(dataframe/dataframe.shift(1))
+    returns = np.log(series/series.shift(1))
     volatility = returns.rolling(window=2).std()*np.sqrt(252)
-    volatility.rename(columns={'portfolio':'port_volatility'})
+    volatility.rename({'portfolio':'port_volatility'})
 
-    # Plot portfolio returns and volatility vs. time
-    start = -200 # row to start plotting at, a negative number
-    end = -180 # row to end plotting at, a negative number
-    plot(returns.iloc[start:end, [11]], test=False, \
-    title='Portfolio Returns', kind='hist', legend=False)
-    plot(volatility.iloc[start:end, [11]], test=False, \
-    title='Portfolio Volatility', kind='hist', legend=False)
+    # Plot portfolio normalized price series vs. time
+    plot(series[-30:]/series[0], test=False, title='Portfolio Normalized Price Series',\
+     kind='line', legend=False)
 
     # Plot individual stock returns and volitility vs. time
-    plot(returns.iloc[start:end, [0, 1, 2, 3, 4, 5]], test=False, \
-    title='Stocks 1-5 Returns', kind='hist')
-    plot(volatility.iloc[start:end, [0, 1, 2, 3, 4, 5]], test=False, \
-    title='Stocks 1-5 Volatility', kind='hist')
+    plot(dataframe.iloc[-30:, [0, 1, 2, 3, 4, 5]]/dataframe.iloc[0, [0, 1, 2, 3, 4, 5]], test=False, \
+    title='Stocks 1-6 Normalized Price Series', kind='line')
 
-    plot(returns.iloc[start:end, [6, 7 , 8, 9, 10]], test=False, \
-    title='Stocks 6-10  Returns', kind='hist')
-    plot(volatility.iloc[start:end, [6, 7 , 8, 9, 10]], test=False,\
-    title='Stocks 6-10 Volatility', kind='hist')
+    plot(dataframe.iloc[-30:, [6, 7 , 8, 9, 10]]/dataframe.iloc[0, [6, 7 , 8, 9, 10]], test=False, \
+    title='Stocks 7-11  Normalized Price Series', kind='line')
 
-    print('Sharpe Ratio: ', sharpe)
-    print('Average Returns: ', \
-    np.around(returns.iloc[:, [11]].mean()**(1/252), 5))
+    print('Sharpe Ratio: ', sharpe.round(2))
+    print('Portfolio Returns: ', \
+    np.around((series[-1]/series[0])**(1/(len(series)/252))-1, 2))
 
     exit
