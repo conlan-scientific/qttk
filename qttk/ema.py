@@ -1,31 +1,21 @@
-'''
-# Quantitative Trading ToolKit (qttk)
-# https://github.com/conlan-scientific/qttk
-
-testema.py - Exponential Moving Average Functions
+"""
+Exponential Moving Average Functions
 
 The exponential moving average (EMA) is a technical indicator
 that tracks the price of an investment (like a stock or commodity)
 over time. The EMA is a type of weighted moving average (WMA) that gives
 more weighting or importance to more recent price data.
 
-from: Investopedia.com
-http://bit.ly/3sRRxBx
-
-# run from project root directory:
-    C:/Users/user/qttk>ipython -i ./qttk/testema.py
+Reference:
+    `Investopedia.com <http://bit.ly/3sRRxBx>`_
 
 Profiled and tested exponential moving average functions
+"""
 
-for a list 10**4 long:
-exponential_moving_average_v1: 0.650 milliseconds
-exponential_moving_average_v2: 0.623 milliseconds
-exponential_moving_average_v3: 0.339 milliseconds
-'''
 from typing import List, Dict, Any, Optional, Union
 from datetime import timedelta
 from pandas._typing import FrameOrSeries
-from scipy.signal import lfiltic, lfilter  # testing purposes only
+from scipy.signal import lfiltic, lfilter  
 from qttk.profiler import time_this
 import pandas as pd
 import numpy as np
@@ -34,18 +24,25 @@ import gc
 from qttk.profiler_v2 import time_this, ExponentialRange, timed_report
 
 
-def simple_ema(values: pd.Series, alpha:float, window:int) -> pd.Series:
-    '''
-    Simple Exponential Moving Average
-    alpha is usually between .1 and .3
+def simple_ema(values: pd.Series, alpha: float = 0.0, window: int = 5) -> pd.Series:
+    """
+    Simple Exponential Moving Average using pandas series.  Use this function
+    for a benchmark comparison.
 
-    '''
-    # initialize
+    Args:
+        values (pd.Series): closing price
+        alpha (float): smoothing factor, usually between .1 - .3
+        window (int): periods for window function
+
+    Returns:
+        pd.Series: exponential moving average
+    """
+    
+    if not alpha:
+        alpha = 2 / (min_periods + 1)
+    
     ema = pd.Series([np.nan]*values.shape[0], name='ema')
-
-    # initialize first ema with simple moving average
     sma = pd.Series(values[:window].sum()/window)
-
     ema.iloc[window - 1] = (alpha * values.iloc[window-1]) + ((1-alpha) * sma)
 
     for i in range(window, values.shape[0]):
@@ -54,12 +51,25 @@ def simple_ema(values: pd.Series, alpha:float, window:int) -> pd.Series:
     return ema
 
 
-def python_simple_ema(values: List, alpha:float, window:int) ->List:
-    '''
-    Python simple Exponential Moving Average
-    '''
-    # initializea
+def python_simple_ema(values: List, alpha: float = 0.0, window: int = 5) -> List:
+    """
+    Simple Exponential Moving Average written in python.  It is used here to 
+    study the performance attributes of different approaches.  This function
+    can be useful for SBCs or other tiny devices.  
+
+    Args:
+        values (List): closing prices
+        alpha (float): smoothing factor
+        window (int): periods to consider in EMA calculation
+
+    Returns:
+        List: exponential moving average
+    """
+
     ema = [None] * len(values)
+
+    if not alpha:
+        alpha = 2 / (min_periods + 1)
 
     #initialize first ema with simple moving average
     sma = sum(values[:window])/window
@@ -83,11 +93,24 @@ def exponential_moving_average_v1(values:      pd.Series,
                                   axis:        int = 0,
                                   times:       Union[None, str, np.ndarray, \
                                   FrameOrSeries] = None) -> pd.Series:
-    '''
-    Accepts a series of values and returns an exponentially
-       weighted moving average series
-    pandas.DataFrame.ewm() function
-    '''
+    """
+    Pandas implementation fo exponential moving average.  
+
+    Args:
+        values (pd.Series): [description]
+        com (Optional[float], optional): [description]. Defaults to None.
+        span (Optional[float], optional): [description]. Defaults to None.
+        halflife (Union[None, float, str,, optional): [description]. Defaults to None.
+        alpha (Optional[float], optional): [description]. Defaults to None.
+        min_periods (int, optional): [description]. Defaults to 5.
+        adjust (bool, optional): [description]. Defaults to True.
+        ignore_na (bool, optional): [description]. Defaults to False.
+        axis (int, optional): [description]. Defaults to 0.
+        times (Union[None, str, np.ndarray,, optional): [description]. Defaults to None.
+
+    Returns:
+        pd.Series: exponential moving average
+    """
     return values.ewm(com=com,
                       span=span,
                       halflife=halflife,
@@ -120,40 +143,64 @@ def _numpy_ewm_alpha_v2(values: np.array,
     return out[:values.size]
 
 
-#@time_this
 def exponential_moving_average_v2(values: pd.Series,
-                                  alpha: float = 0,
+                                  alpha: float = 0.0,
                                   min_periods: int = 5) -> pd.Series:
-    '''
-    Uses numpy's convolve method to slightly outperform native pandas.DataFrame.ewm
-      at the cost of some features.
-    '''
+    """
+    Uses Numpy's convolve method to calculate an exponential moving average.
+    This function is vectorized and fast, but it has accuracy issues to resolve.
+
+    Args:
+        values (pd.Series): closing prices
+        alpha (float, optional): smoothing factor, usually between .1 - .3 Defaults to 2/(N+1).
+        min_periods (int, optional): periods for window function. Defaults to 5.
+
+    Returns:
+        pd.Series: exponential moving average series
+    """
+
+    if not alpha: # argument is blank
+        alpha = 2 / (min_periods + 1)
+
     a = _numpy_ewm_alpha_v2(values.values, alpha=alpha, min_periods=min_periods)
     values = a
     return values
 
 
-#@time_this
-def exponential_moving_average_v3(values: pd.Series, min_periods: int = 5):
-    '''
-    Scipy alternative
-    '''
-    values = values.to_numpy()
-    alpha = 2 / (min_periods + 1)
+def exponential_moving_average_v3(series: pd.Series,
+                                  alpha: float = 0.0,
+                                  min_periods: int = 5):
+    """
+    The exponential moving average (EMA) is a technical indicator
+    that tracks the price of an investment (like a stock or commodity)
+    over time. The EMA is a type of weighted moving average (WMA) that gives
+    more weighting or importance to more recent price data.
+
+    Args:
+        values (pd.Series): closing price 
+        alpha (float, optional): smoothing factor, usually between .1 - .3 Defaults to 2/(N+1).
+        min_periods (int, optional): periods for window function. Defaults to 5.
+
+    Returns:
+        EMA (pd.Series): series named EMA 
+    """
+    if not alpha:
+        alpha = 2 / (min_periods + 1)
+
+    values = series.to_numpy()    
     b = [alpha]
     a = [1, alpha-1]
     zi = lfiltic(b, a, values[0:1], [0])
-    return lfilter(b, a, values, zi=zi)[0]
+    output = pd.Series(lfilter(b, a, values, zi=zi)[0])
+    output.index = series.index
+    output.rename('EMA', inplace=True)
+    return output
 
 
 if __name__ == '__main__':
 
     i = 1 # exponent to generate 10**i range
 
-    #from numpy.random import default_rng
-    #rng = default_rng()
-    #vals = rng.standard_normal(10**i)
-    #series = pd.Series(vals)
     series = pd.Series(np.arange(0, 10**i))
     mp = 5
     alpha = 2/(mp + 1)

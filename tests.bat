@@ -3,7 +3,7 @@
 start /wait python qttk\utils\data_utils.py
 start /wait python qttk\utils\data_validation.py
 start /wait python qttk\utils\sample_data.py
-start /wait ipython qttk/chaikin_money_flow.py test &&
+start /wait ipython qttk\chaikin_money_flow.py test &&
 start /wait python qttk\bollinger.py
 start /wait python qttk\cma.py
 start /wait python qttk\cumulative_sum.py
