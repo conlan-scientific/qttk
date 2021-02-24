@@ -67,16 +67,14 @@ def compute_bb(eod_data: pd.DataFrame,
 
     # Calculating the 50 day average volume
     # Both volume and the 50 day average will be plotted as line graphs
-    try:
-        eod_data['MA_Volume'] = eod_data['volume'] \
+    eod_data['MA_Volume'] = eod_data['volume'] \
         .rolling(window=volume_window) \
         .mean()
-    except KeyError: None
 
     # Tells us where we are in relation to the BB
     # chart will have 2 additional lines that are
     # 21 day high and low to see how it fluctuates
-    eod_data['pct_b'] = ((eod_data['close'] - eod_data['BOLD']) / (eod_data['BOLD'] - eod_data['BOLU']))
+    eod_data['pct_b'] = ((eod_data['close'] - eod_data['BOLD']) / (eod_data['BOLU'] - eod_data['BOLD']))
 
     # Tells us how wide the BB are
     # Lines are the highest and lowest values of bandwidth in the last 125 days
@@ -94,6 +92,7 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     # bb_data = data_frame[['open', 'close', 'low', 'high']]
     fig, axs = plt.subplots(4, 1, figsize=(10, 6), gridspec_kw={'height_ratios': [3, 1, 1, 1]})
     plt.subplots_adjust(top=0.947, bottom=0.087, left=0.071, right=0.989, hspace=0.918, wspace=0.2)
+    plt.tight_layout()
     '''
     Figure parameters:
     top=0.947, bottom=0.087, left=0.071, right=0.989, hspace=0.918,wspace=0.2
@@ -114,9 +113,9 @@ def graph_bb(data_frame: pd.DataFrame) -> None:
     axs[0].grid(True)
 
     # x day Moving Average Volume Subplot
-    axs[1].set_title('Moving Average Volume')
+    axs[1].set_title('Volume')
     axs[1].bar(data_frame.index, data_frame['volume'])
-    # axs[1].plot(data_frame.index, data_frame['MA_Volume'], color='black')
+    axs[1].plot(data_frame.index, data_frame['MA_Volume'], color='black')
     axs[1].xaxis.set_major_locator(locator)
     axs[1].set_ylabel('Volume')
     axs[1].grid(True)
