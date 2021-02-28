@@ -37,3 +37,4 @@ from qttk.sharpe import calculate_return_series, calculate_sharpe_ratio
 from qttk.portfolio import portfolio_price_series
 from qttk.pl_return import compute_logr, compute_perr, graph_returns
 from qttk.r_squared import r_squared
+from qttk.opportunity_eval import mean_return, r_squared_min

@@ -24,8 +24,8 @@ if __name__ == '__main__':
     a portfolio with a dictionary of stocks with weights of 0.09
     is defined below to establish a baseline for comparison:
     '''
-    stocks = {'AWU': 0.09, 'HECP': 0.09, 'HRVC': 0.09, 'HXX': 0.09, 'NSLG': 0.09, \
-    'PQCE': 0.09, 'RZW': 0.09, 'TRE': 0.09, 'WFS': 0.09, 'YPS': 0.09, 'ZGL': 0.09}
+    #stocks = {'AWU': 0.09, 'HECP': 0.09, 'HRVC': 0.09, 'HXX': 0.09, 'NSLG': 0.09, \
+    #'PQCE': 0.09, 'RZW': 0.09, 'TRE': 0.09, 'WFS': 0.09, 'YPS': 0.09, 'ZGL': 0.09}
 
     '''
     Results-
@@ -48,8 +48,8 @@ if __name__ == '__main__':
     Stocks selected based upon returns and volatility:
     2 stock portfolio: NSLG, PQCE
     '''
-    #stocks = {'AWU': 0.0, 'HECP': 0.0, 'HRVC': 0.0, 'HXX': 0.0, 'NSLG': 0.5, \
-    #'PQCE': 0.5, 'RZW': 0.0, 'TRE': 0.0, 'WFS': 0.0, 'YPS': 0.0, 'ZGL': 0.0}
+    stocks = {'AWU': 0.0, 'HECP': 0.0, 'HRVC': 0.0, 'HXX': 0.0, 'NSLG': 0.5, \
+    'PQCE': 0.5, 'RZW': 0.0, 'TRE': 0.0, 'WFS': 0.0, 'YPS': 0.0, 'ZGL': 0.0}
     '''
     Results-
     Sharpe Ratio: 0.70

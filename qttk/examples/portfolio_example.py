@@ -7,9 +7,10 @@
 # run from project directory:
     C:/Users/user/qttk>ipython -i ./qttk/examples/portfolio_example.py
 
-# production version: 2021-02-12
+# production version: 2021-02-27
 '''
 from qttk.indicators import calculate_sharpe_ratio, portfolio_price_series
+from qttk.indicators import mean_return, r_squared_min, r_squared
 from qttk.indicators import compute_rsi, compute_bb
 from qttk.utils.sample_data import load_portfolio
 
@@ -63,16 +64,28 @@ if __name__ == '__main__':
     # an equally weighted portfolio is assumed
     # weights must add up to 1.0 (100%)
     weights = np.full((1,len(stocks)), 1/len(stocks))
-    #weights = np.array([[0.125, 0.125, 0.0, 0.125, 0.125, 0.125, 0.0, 0.125,\
-     #0.125, 0.125, 0.0]])
-    #weights = np.array([[0.0, 0.5, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0]])
-    #weights = np.array([[0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.33, 0.0, 0.0, 0.0, 0.34]])
     portfolio = pd.DataFrame(weights, columns=stocks)
     dataframe = load_portfolio(portfolio.columns.values)
     series = portfolio_price_series(weights, dataframe.iloc[-252:])
     sharpe = np.around(calculate_sharpe_ratio(series, 0.04), 2)
+    print('')
     print(dataframe.describe().round(2))
-    print('Sharpe Ratio: ', sharpe)
+    print('\nSharpe Ratio: ', sharpe)
+
+    print('\nnaive prediction--')
+    predicted_values = series.shift(1)
+    r2 = r_squared(series, predicted_values).round(3)
+    print('R squared: ', r2)
+
+    C_0 = 1000.00  # invested capital, the portion of assets being invested
+    mean = mean_return(series, C_0, r2)
+    r2_min = r_squared_min(series, C_0, mean)
+
+    print('\nC_0: ${}'.format(C_0))
+    print('mean return: ', np.around(mean, decimals=2))
+    print('percent mean return: ', np.around(mean/C_0*100, decimals=2))
+    print('minimum R squared needed: ', np.around(r2_min, decimals=3))
+    print('')
 
     ticker = 'Portfolio'
     window = 30  # interval needed for compute_rsi
