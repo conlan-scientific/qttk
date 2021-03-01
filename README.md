@@ -5,7 +5,7 @@
 
 + **Consistent** Date-indexed `pandas` objects are the core data structure.
 + **Transparent** Test cases are clear and serve as an additional layer of documentation. Type hints are used liberally.
-+ **Performant** Execution speed tests are built into test cases. Only the fatest functions get published.
++ **Performant** Execution speed tests are built into test cases. Only the fastest functions get published.
 
 
 ## Getting Started with `qttk`
