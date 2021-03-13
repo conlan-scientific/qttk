@@ -36,7 +36,7 @@ def _fillinValues(dataframe:pd.DataFrame)->pd.DataFrame:
     dataframe.fillna(method='bfill', inplace=True)
     return dataframe
 
-def compute_net_returns(dataframe:pd.DataFrame)->pd.DataFrame:
+def compute_net_returns(series:pd.Series)->pd.Series:
     '''
     Net return(t) = Price(t)/Price(t-1) - 1
     from: page 13, Machine Trading by Chan, E.P.
@@ -47,7 +47,7 @@ def compute_net_returns(dataframe:pd.DataFrame)->pd.DataFrame:
     index        0    1     2   3    4
     YYYY-MM-DD   open close low high volume
     '''
-    price = dataframe['close']
+    price = series
     rets = price/price.shift(1)-1
     # fill in NaN values
     rets = _fillinValues(rets)
@@ -61,7 +61,7 @@ def _save_data(filename, dataframe: pd.DataFrame):
     dataframe.to_csv(filename)
 
 
-def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
+def compute_rsi(series:pd.Series, window=14) -> pd.Series:
     '''
     rsi: Relative Strength Index
         rsi = 100 - (100/(1+RS))
@@ -83,7 +83,7 @@ def compute_rsi(dataframe:pd.DataFrame, window=14) -> pd.DataFrame:
     # rsi algorithm validated against Excel: 2021-01-17v3
 
     # calculate daily net returns
-    rets = compute_net_returns(dataframe)
+    rets = compute_net_returns(series)
     # date_range is used to reindex after separating days up from days down
     date_range = rets.index
     up = rets.loc[rets.iloc[:] >= 0.0]
@@ -121,14 +121,14 @@ def _test(window):
 
     # test compute_net_returns() to validate the results
     # if a test fails, an assertion error will be shown
-    # no result is showon when a test passes
+    # no result is shown when a test passes
     from pandas._testing import assert_frame_equal
     from pandas._testing import assert_series_equal
 
     path = os.path.dirname(__file__)
     filename_rets = os.path.join(path, 'data', 'validation_data', 'rets_YPS.csv')
     test_rets_validated = pd.read_csv(filename_rets, index_col=0, parse_dates=True)
-    test_rets = pd.DataFrame(compute_net_returns(dataframe))
+    test_rets = pd.DataFrame(compute_net_returns(dataframe['close']))
     assert_frame_equal(test_rets_validated, test_rets)
 
     # window must be equal to 14 for test to pass
@@ -138,7 +138,7 @@ def _test(window):
     filename_rsi = os.path.join(path, 'data', 'validation_data', 'rsi_YPS.csv')
     test_rsi_validated = pd.read_csv(filename_rsi, index_col=0, parse_dates=True)
     test_rsi_series = test_rsi_validated.iloc[:, 0]
-    test_rsi = compute_rsi(dataframe, window)
+    test_rsi = compute_rsi(dataframe['close'], window)
     assert_series_equal(test_rsi_series, test_rsi)
 
 
@@ -149,7 +149,7 @@ if __name__ == '__main__':
     # a shorter window makes rsi more sensitive to daily price changes
     window = 14
 
-    rsi = compute_rsi(dataframe, window)
+    rsi = compute_rsi(dataframe['close'], window)
 
     # Execute unit tests
     _test(window)
@@ -163,5 +163,4 @@ if __name__ == '__main__':
     with timed_report():
         tt = time_this(lambda *args, **kwargs: args[0].shape[0])
         for i in exp_range.iterator():
-            # rsi_SPY = compute_rsi(dataframe, window)
-            tt(compute_rsi)(test_df.iloc[:i], window)
+            tt(compute_rsi)(test_df.iloc[:i, 2], window)
