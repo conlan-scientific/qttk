@@ -125,7 +125,7 @@ def weighted_moving_avg_v3(values: pd.Series, window: int = 5) -> pd.Series:
 
     # when period is greater than values, return
     if values.shape[0] <= window:
-        return pd.Series([np.nan]*len(values))
+        return pd.Series([np.nan]*len(values), index=values.index)
 
     # initialize series and copy index from input series to return a matching index
     wma = pd.Series([np.nan]*values.shape[0], index=values.index, name='wma')
